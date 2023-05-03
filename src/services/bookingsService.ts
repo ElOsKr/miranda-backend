@@ -1,24 +1,27 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable indent */
 import { BookingsType } from '@src/@types/bookingsType';
-import { createNewBooking, getAllBookings } from '@src/database/Bookings';
-import uuid  from 'uuid';
+import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/Bookings';
+import {uuid}  from 'uuidv4';
 
 export const getBookings = () => {
     const allBookings = getAllBookings();
     return allBookings;
 };
 
-export const getBooking = () => {
-  return;
+export const getBooking = (bookingId: string) => {
+    const booking = getOneBooking(bookingId);
+    return booking;
 };
 
 export const createBooking = (newBooking: BookingsType) => {
     const BookingToInsert = {
         ...newBooking,
-        id: uuid.v4(),
+        id: uuid(),
     };
 
     const createBooking = createNewBooking(BookingToInsert);
@@ -26,10 +29,11 @@ export const createBooking = (newBooking: BookingsType) => {
     return createBooking;
 };
 
-export const updateBooking = () => {
-  return;
+export const updateBooking = (bookingId: string, changes: any) => {
+    const updatedBooking = updateOneBooking(bookingId,changes);
+    return updatedBooking;
 };
 
-export const deleteBooking = () => {
-  return;
+export const deleteBooking = (bookingId: string) => {
+    deleteOneBooking(bookingId);
 };

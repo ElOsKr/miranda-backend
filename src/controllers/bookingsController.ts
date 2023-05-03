@@ -18,8 +18,15 @@ export const getAllBookings = (req: express.Request ,res: express.Response) => {
 };
 
 export const getOneBooking = (req: express.Request ,res: express.Response) => {
-    const booking = getBooking();
-    res.send('Get one booking');
+    const {
+        params: {bookingId},
+    } = req;
+    if(!bookingId){
+        return;
+    }
+
+    const booking = getBooking(bookingId);
+    res.send({status: 'OK', data: booking});
 };
 
 export const createOneBooking = (req: express.Request ,res: express.Response) => {
@@ -56,15 +63,31 @@ export const createOneBooking = (req: express.Request ,res: express.Response) =>
     };
 
     const createdBooking = createBooking(newBooking);
-    res.status(201).send({status: 'OK', data: createBooking});
+    res.status(201).send({status: 'OK', data: createdBooking});
 };
 
 export const updateOneBooking = (req: express.Request ,res: express.Response) => {
-    const updatedBooking = updateBooking();
-    res.send('Create Booking');
+    const {
+        body,
+        params: { bookingId },
+    } = req;
+
+    if(!bookingId){
+        return;
+    }
+
+    const updatedBooking = updateBooking(bookingId,body);
+    res.send({status: 'OK', data: updatedBooking});
 };
 
 export const deleteOneBooking = (req: express.Request ,res: express.Response) => {
-    deleteBooking();
-    res.send('Delete booking');
+    const {
+        params: { bookingId },
+    }= req;
+
+    if(bookingId){
+        return;
+    }
+    deleteBooking(bookingId);
+    res.status(204).send({status: 'OK'});
 };
