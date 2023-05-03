@@ -1,0 +1,115 @@
+[
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 45,
+        "id": 1,
+        "type": "Single",
+        "price": 345,
+        "status": false
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 46,
+        "id": 2,
+        "type": "Double Bed",
+        "amenities": [
+            "Test",
+            "Test"
+        ],
+        "price": 345,
+        "offer": 10,
+        "status": true
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 47,
+        "id": 3,
+        "type": "Double Bed",
+        "price": 345,
+        "offer": 10,
+        "status": true
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 48,
+        "id": 4,
+        "type": "Single",
+        "amenities": [
+            "Test",
+            "Test"
+        ],
+        "price": 345,
+        "offer": 10,
+        "status": false
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 49,
+        "id": 5,
+        "type": "Double Bed",
+        "amenities": [
+            "Test",
+            "Test"
+        ],
+        "price": 345,
+        "offer": 10,
+        "status": false
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 50,
+        "id": 6,
+        "type": "Double Bed",
+        "price": 345,
+        "offer": 10,
+        "status": false
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 51,
+        "id": 7,
+        "type": "Double Bed",
+        "amenities": [
+            "Test",
+            "Test"
+        ],
+        "price": 345,
+        "offer": 10,
+        "status": true
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 52,
+        "id": 8,
+        "type": "Double Bed",
+        "amenities": [
+            "Test",
+            "Test"
+        ],
+        "price": 345,
+        "offer": 10,
+        "status": false
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 53,
+        "id": 9,
+        "type": "Single",
+        "price": 345,
+        "offer": 10,
+        "status": true
+    },
+    {
+        "photo": "https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=",
+        "number": 54,
+        "id": 10,
+        "type": "Double Bed",
+        "amenities": [
+            "Test",
+            "Test"
+        ],
+        "price": 345,
+        "offer": 10,
+        "status": true
+    }
+]

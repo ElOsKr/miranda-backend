@@ -1,13 +1,20 @@
-import './pre-start'; // Must be the first import
-import logger from 'jet-logger';
-
-import EnvVars from '@src/constants/EnvVars';
-import server from './server';
+import express from 'express';
+import bookingRouter from '@src/routes/bookings';
+import bodyParser from 'body-parser';
 
 
-// **** Run **** //
+const app = express();
 
-const SERVER_START_MSG = ('Express server started on port: ' + 
-  EnvVars.Port.toString());
+const PORT = process.env.PORT || 3000;
 
-server.listen(EnvVars.Port, () => logger.info(SERVER_START_MSG));
+app.get('/', (req,res)=>{
+  res.send('Working');
+});
+
+app.use(bodyParser.json());
+
+app.use('/api/bookings',bookingRouter);
+
+app.listen(PORT, ()=> {
+  console.log(`Listening on port ${PORT}`);
+});
