@@ -1,3 +1,4 @@
+/* eslint-disable node/no-process-env */
 /* eslint-disable @typescript-eslint/require-await */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
@@ -44,8 +45,8 @@ passport.use(
 passport.use(
     new JWTstrategy(
       {
-        secretOrKey: 'TOP_SECRET',
-        jwtFromRequest: ExtractJwt.fromUrlQueryParameter('secret_token'),
+        secretOrKey: process.env.SECRET_KEY,
+        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
       async (token, done) => {
         try {

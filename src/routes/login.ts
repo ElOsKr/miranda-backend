@@ -1,3 +1,5 @@
+/* eslint-disable node/no-process-env */
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -7,7 +9,11 @@
 import express from 'express';
 import passport from 'passport';
 import jwt from 'jsonwebtoken';
-import { User } from '@src/model/model';
+import dotenv from 'dotenv';
+
+dotenv.config();
+
+const secret_token = process.env.SECRET_KEY || '';
 
 export const loginRouter = express.Router();
 
@@ -16,12 +22,18 @@ loginRouter.post(
     async (req, res, next) => {
       passport.authenticate(
         'login',
-        async (err: any, user: User) => {
+        async (err: any, user: any) => {
           try {
-            if (err || !user) {
+            if (err) {
               const error = new Error('An error occurred.');
   
               return next(error);
+            }
+
+            if(!user){
+                const error = new Error('No user');
+  
+                return next(error);
             }
   
             req.login(
@@ -30,8 +42,8 @@ loginRouter.post(
               async (error) => {
                 if (error) return next(error);
   
-                const body = { email: user.email, password: user.password };
-                const token = jwt.sign({ user: body }, 'TOP_SECRET');
+                const body = { _id: user._id, email: user.email};
+                const token = jwt.sign({ user: body }, secret_token);
   
                 return res.json({ token });
               },

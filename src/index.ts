@@ -13,7 +13,7 @@ import { router } from './routes/secureRoute';
 
 async function connection() {
   try{
-    await mongoose.connect('mongodb://127.0.0.0:27017/passport-jwt', {
+    await mongoose.connect('mongodb://127.0.0.1:27017/passport-jwt', {
       useNewUrlParser: true,
       useUnifiedTopology: true,
     } as mongoose.ConnectOptions);
