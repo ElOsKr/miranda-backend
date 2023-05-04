@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable indent */
@@ -30,12 +31,42 @@ export const getOneBooking = (req: express.Request ,res: express.Response) => {
 };
 
 export const createOneBooking = (req: express.Request ,res: express.Response) => {
+    
     const { body } = req;
+
+    if(
+        !body.photo||
+        !body.id||
+        !body.guest||
+        !body.orderDate||
+        !body.checkin||
+        !body.checkout||
+        !body.roomId||
+        !body.price||
+        !body.amenities||
+        !body.typeRoom||
+        !body.description||
+        !body.status
+    ){
+        res.status(400).send({
+            status: 'Failed',
+            data: {
+                error: 'Cannot create object',
+            },
+        });
+        return;
+    }
     
     for ( const key in body ){
         if(!body[key]){
-            return;
+            res.status(400).send({
+                status: 'Failed',
+                data: {
+                    error: 'missing params',
+                },
+            });
         }
+        return;
     }
 
     const newBooking: BookingsType = {
@@ -62,8 +93,12 @@ export const createOneBooking = (req: express.Request ,res: express.Response) =>
         status: body.status,
     };
 
-    const createdBooking = createBooking(newBooking);
-    res.status(201).send({status: 'OK', data: createdBooking});
+    try{
+        const createdBooking = createBooking(newBooking);
+        res.status(201).send({status: 'OK', data: createdBooking});
+    }catch(error){
+        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+    }
 };
 
 export const updateOneBooking = (req: express.Request ,res: express.Response) => {

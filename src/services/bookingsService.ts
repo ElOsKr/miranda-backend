@@ -1,3 +1,4 @@
+/* eslint-disable no-useless-catch */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable max-len */
 /* eslint-disable @typescript-eslint/no-unsafe-call */
@@ -19,14 +20,17 @@ export const getBooking = (bookingId: string) => {
 };
 
 export const createBooking = (newBooking: BookingsType) => {
-    const BookingToInsert = {
+    const BookingToInsert: BookingsType = {
         ...newBooking,
         id: uuid(),
     };
+    try{
+        const createBooking = createNewBooking(BookingToInsert);
 
-    const createBooking = createNewBooking(BookingToInsert);
-
-    return createBooking;
+        return createBooking;
+    }catch (error){
+        throw error;
+    }
 };
 
 export const updateBooking = (bookingId: string, changes: any) => {

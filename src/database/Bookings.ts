@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable max-len */
@@ -23,24 +24,36 @@ export const createNewBooking = (newBooking: BookingsType) => {
     const isAlreadyAdded = bookings.find((booking) => booking.id === newBooking.id);
 
     if(isAlreadyAdded){
-        return;
+        throw{
+            status: 400,
+            message: 'The object already exists',
+        };
     }
 
-    bookings.push(newBooking);
-    saveToDatabase(bookings);
-    return newBooking;
+    try{
+        bookings.push(newBooking);
+        saveToDatabase(bookings);
+        return newBooking;
+    }catch (error){
+        throw {
+            status: 500,
+            message: error?.message || error,
+        };
+    }
 };
 
 export const updateOneBooking = (bookingId: string, changes: any) => {
 
+    const indexForUpdate = bookings.findIndex((booking) => booking.id === bookingId);
+
     bookings.map((booking)=> {
         if(booking.id===bookingId){
             const updatedBooking: BookingsType = {
-                booking,
+                ...booking,
                 ...changes,
             };
 
-            booking=updatedBooking;
+            bookings[indexForUpdate] = updatedBooking;
 
             saveToDatabase(bookings);
             return updatedBooking;
