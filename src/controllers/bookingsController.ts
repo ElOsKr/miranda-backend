@@ -14,8 +14,12 @@ import {
 import express from 'express';
 
 export const getAllBookings = (req: express.Request ,res: express.Response) => {
-    const allBookings = getBookings();
-    res.send({status: 'OK', data: allBookings});
+    try{
+        const allBookings = getBookings();
+        res.send({status: 'OK', data: allBookings});
+    }catch(error){
+        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+    }
 };
 
 export const getOneBooking = (req: express.Request ,res: express.Response) => {
@@ -23,11 +27,20 @@ export const getOneBooking = (req: express.Request ,res: express.Response) => {
         params: {bookingId},
     } = req;
     if(!bookingId){
-        return;
+        res.status(400).send({
+            status: 'FAILED',
+            data: {error: 'BookingId can not be empty'},
+        });
     }
 
-    const booking = getBooking(bookingId);
-    res.send({status: 'OK', data: booking});
+    try{
+        const booking = getBooking(bookingId);
+        res.send({status: 'OK', data: booking});       
+    }catch(error){
+        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+    }
+
+
 };
 
 export const createOneBooking = (req: express.Request ,res: express.Response) => {
@@ -95,7 +108,7 @@ export const createOneBooking = (req: express.Request ,res: express.Response) =>
 
     try{
         const createdBooking = createBooking(newBooking);
-        res.status(201).send({status: 'OK', data: createdBooking});
+        res.send({status: 'OK', data: createdBooking});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
@@ -108,11 +121,19 @@ export const updateOneBooking = (req: express.Request ,res: express.Response) =>
     } = req;
 
     if(!bookingId){
-        return;
+        res.status(400).send({
+            status: 'FAILED',
+            data: {error: 'BookingId can not be empty'},
+        });
     }
 
-    const updatedBooking = updateBooking(bookingId,body);
-    res.send({status: 'OK', data: updatedBooking});
+    try{
+        const updatedBooking = updateBooking(bookingId,body);
+        res.send({status: 'OK', data: updatedBooking});        
+    }catch(error){
+        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+    }
+
 };
 
 export const deleteOneBooking = (req: express.Request ,res: express.Response) => {
@@ -120,9 +141,18 @@ export const deleteOneBooking = (req: express.Request ,res: express.Response) =>
         params: { bookingId },
     }= req;
 
-    if(bookingId){
-        return;
+    if(!bookingId){
+        res.status(400).send({
+            status: 'FAILED',
+            data: {error: 'BookingId can not be empty'},
+        });
     }
-    deleteBooking(bookingId);
-    res.status(204).send({status: 'OK'});
+
+    try{
+        deleteBooking(bookingId);
+        res.send({status: 'OK'});        
+    }catch(error){
+        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+    }
+
 };

@@ -8,20 +8,32 @@ import bookings from '@src/data/bookings.json';
 import { saveToDatabase } from '@src/util/bookingsUtils';
 
 export const getAllBookings = () => {
-    return bookings;
+    try{
+        return bookings;
+    }catch(error){
+        throw { status: 500, message: error};
+    }
 };
 
 export const getOneBooking = (bookingId: string) => {
-    const booking = bookings.find((booking) => booking.id === bookingId);
 
-    if(!booking){
-        return;
+    try{
+        const booking = bookings.find((booking) => booking.id === bookingId);
+
+        if(!booking){
+            throw{
+                status: 400,
+                message: `Can't find booking with the id ${bookingId}`,
+            };
+        }
+        return booking;
+    }catch(error){
+        throw { status: error?.status||500 , message: error?.message || error};
     }
-    return booking;
 };
 
 export const createNewBooking = (newBooking: BookingsType) => {
-    const isAlreadyAdded = bookings.find((booking) => booking.id === newBooking.id);
+    const isAlreadyAdded = bookings.findIndex((booking) => booking.id === newBooking.id);
 
     if(isAlreadyAdded){
         throw{
@@ -31,8 +43,9 @@ export const createNewBooking = (newBooking: BookingsType) => {
     }
 
     try{
-        bookings.push(newBooking);
-        saveToDatabase(bookings);
+        const addedBooking = bookings;
+        addedBooking.push(newBooking);
+        saveToDatabase(addedBooking);
         return newBooking;
     }catch (error){
         throw {
@@ -44,28 +57,52 @@ export const createNewBooking = (newBooking: BookingsType) => {
 
 export const updateOneBooking = (bookingId: string, changes: any) => {
 
-    const indexForUpdate = bookings.findIndex((booking) => booking.id === bookingId);
+    try{
+        const indexForUpdate = bookings.findIndex((booking) => booking.id === bookingId);
 
-    bookings.map((booking)=> {
-        if(booking.id===bookingId){
-            const updatedBooking: BookingsType = {
-                ...booking,
-                ...changes,
+        if(indexForUpdate ===-1){
+            throw{
+                status: 400,
+                message: `Can't find booking with the id ${bookingId}`,
             };
-
-            bookings[indexForUpdate] = updatedBooking;
-
-            saveToDatabase(bookings);
-            return updatedBooking;
-        }else{
-            return;
         }
-    });
+
+        bookings.map((booking)=> {
+            if(booking.id===bookingId){
+                const updatedBooking: BookingsType = {
+                    ...booking,
+                    ...changes,
+                };
+
+                bookings[indexForUpdate] = updatedBooking;
+
+                saveToDatabase(bookings);
+                return updatedBooking;
+            }else{
+                return;
+            }
+        });
+    }catch(error){
+        throw { status: error?.status||500 , message: error?.message || error};
+    }
 };
 
 export const deleteOneBooking = (bookingId: string) => {
-    bookings.filter((booking)=> booking.id!==bookingId);
 
-    saveToDatabase(bookings);
+    try{
+        const deleteBooking = bookings.filter((booking)=> booking.id!==bookingId);
+
+        if(deleteBooking.length === bookings.length){
+            throw{
+                status: 400,
+                message: `Can't find booking with the id ${bookingId}`,
+            };
+        }
+
+        saveToDatabase(deleteBooking);        
+    }catch(error){
+        throw { status: error?.status||500 , message: error?.message || error};
+    }
+
 
 };

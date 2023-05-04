@@ -14,20 +14,20 @@ import { loginRouter } from './routes/login';
 import { router } from './routes/secureRoute';
 import'./auth/auth';
 
-async function connection() {
-  try{
-    await mongoose.connect('mongodb://127.0.0.1:27017/passport-jwt', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions);
+// async function connection() {
+//   try{
+//     await mongoose.connect('mongodb://127.0.0.1:27017/passport-jwt', {
+//       useNewUrlParser: true,
+//       useUnifiedTopology: true,
+//     } as mongoose.ConnectOptions);
 
-    console.log('Connected');
-  } catch (error){
-    console.log(`Mongo connection error: ${error}`);
-  }
-}
+//     console.log('Connected');
+//   } catch (error){
+//     console.log(`Mongo connection error: ${error}`);
+//   }
+// }
 
-connection();
+// connection();
 
 const app = express();
 

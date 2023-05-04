@@ -10,13 +10,22 @@ import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, upda
 import {uuid}  from 'uuidv4';
 
 export const getBookings = () => {
-    const allBookings = getAllBookings();
-    return allBookings;
+    try{
+        const allBookings = getAllBookings();
+        return allBookings;        
+    }catch(error){
+        throw error;
+    }
+
 };
 
 export const getBooking = (bookingId: string) => {
-    const booking = getOneBooking(bookingId);
-    return booking;
+    try{
+        const booking = getOneBooking(bookingId);
+        return booking;
+    }catch(error){
+        throw error;
+    }
 };
 
 export const createBooking = (newBooking: BookingsType) => {
@@ -34,10 +43,18 @@ export const createBooking = (newBooking: BookingsType) => {
 };
 
 export const updateBooking = (bookingId: string, changes: any) => {
-    const updatedBooking = updateOneBooking(bookingId,changes);
-    return updatedBooking;
+    try{
+        const updatedBooking = updateOneBooking(bookingId,changes);
+        return updatedBooking;
+    }catch(error){
+        throw error;
+    }
 };
 
 export const deleteBooking = (bookingId: string) => {
-    deleteOneBooking(bookingId);
+    try{
+        deleteOneBooking(bookingId);
+    }catch(error){
+        throw error;
+    } 
 };
