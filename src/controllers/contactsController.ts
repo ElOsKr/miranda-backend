@@ -3,39 +3,39 @@
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable indent */
 /* eslint-disable max-len */
-import { UserType } from '@src/@types/userType';
+import { ContactsType } from '@src/@types/contactType';
 import { 
-  getUsers,
-  getUser,
-  createUser,
-  updateUser,
-  deleteUser, 
-} from '@src/services/usersService';
+  getContacts,
+  getContact,
+  createContact,
+  updateContact,
+  deleteContact, 
+} from '@src/services/contactsService';
 import express from 'express';
 
-export const getAllUsers = (req: express.Request ,res: express.Response) => {
+export const getAllContacts = (req: express.Request ,res: express.Response) => {
     try{
-        const allUsers = getUsers();
-        res.send({status: 'OK', data: allUsers});
+        const allContacts = getContacts();
+        res.send({status: 'OK', data: allContacts});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const getOneUser = (req: express.Request ,res: express.Response) => {
+export const getOneContact = (req: express.Request ,res: express.Response) => {
     const {
-        params: {userId},
+        params: {contactId},
     } = req;
-    if(!userId){
+    if(!contactId){
         res.status(400).send({
             status: 'FAILED',
-            data: {error: 'UserId can not be empty'},
+            data: {error: 'ContactId can not be empty'},
         });
     }
 
     try{
-        const user = getUser(userId);
-        res.send({status: 'OK', data: user});       
+        const contact = getContact(contactId);
+        res.send({status: 'OK', data: contact});       
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
@@ -43,18 +43,15 @@ export const getOneUser = (req: express.Request ,res: express.Response) => {
 
 };
 
-export const createOneUser = (req: express.Request ,res: express.Response) => {
+export const createOneContact = (req: express.Request ,res: express.Response) => {
     
     const { body } = req;
 
     if(
         !body.id||
-        !body.name||
-        !body.photo||
-        !body.email||
-        !body.description||
-        !body.contact||
-        !body.status
+        !body.customer||
+        !body.subject||
+        !body.comment
     ){
         res.status(400).send({
             status: 'Failed',
@@ -77,60 +74,62 @@ export const createOneUser = (req: express.Request ,res: express.Response) => {
         return;
     }
 
-    const newUser: UserType = {
+    const newContact: ContactsType = {
         id: body.id,
-        name: body.name,
-        photo: body.photo,
-        email: body.email,
-        description: body.description,
-        contact: body.contact,
+        customer: {
+          name: body.customer.name,
+          email: body.orderDate.email,
+          phone: body.customer.phone,
+        },
+        subject: body.subject,
+        comment: body.comment,
         status: body.status,
     };
 
     try{
-        const createdUser = createUser(newUser);
-        res.send({status: 'OK', data: createdUser});
+        const createdContact = createContact(newContact);
+        res.send({status: 'OK', data: createdContact});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const updateOneUser = (req: express.Request ,res: express.Response) => {
+export const updateOneContact = (req: express.Request ,res: express.Response) => {
     const {
         body,
-        params: { userId },
+        params: { contactId },
     } = req;
 
-    if(!userId){
+    if(!contactId){
         res.status(400).send({
             status: 'FAILED',
-            data: {error: 'UserId can not be empty'},
+            data: {error: 'ContactId can not be empty'},
         });
     }
 
     try{
-        const updatedUser = updateUser(userId,body);
-        res.send({status: 'OK', data: updatedUser});        
+        const updatedContact = updateContact(contactId,body);
+        res.send({status: 'OK', data: updatedContact});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 };
 
-export const deleteOneUser = (req: express.Request ,res: express.Response) => {
+export const deleteOneContact = (req: express.Request ,res: express.Response) => {
     const {
-        params: { userId },
+        params: { contactId },
     }= req;
 
-    if(!userId){
+    if(!contactId){
         res.status(400).send({
             status: 'FAILED',
-            data: {error: 'UserId can not be empty'},
+            data: {error: 'ContactId can not be empty'},
         });
     }
 
     try{
-        deleteUser(userId);
+        deleteContact(contactId);
         res.send({status: 'OK'});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
