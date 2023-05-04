@@ -103,6 +103,7 @@ export const createOneBooking = (req: express.Request ,res: express.Response) =>
         amenities: body.amenities,
         typeRoom: body.typeRoom,
         description: body.description,
+        specialRequest: body.specialRequest,
         status: body.status,
     };
 

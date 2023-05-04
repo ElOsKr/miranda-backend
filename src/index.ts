@@ -15,6 +15,7 @@ import { router } from './routes/secureRoute';
 import'./auth/auth';
 import userRouter from './routes/users';
 import contactRouter from './routes/contacts';
+import roomRouter from './routes/rooms';
 
 // async function connection() {
 //   try{
@@ -50,6 +51,8 @@ app.use('/bookings', passport.authenticate('jwt', { session: false }),bookingRou
 app.use('/users', passport.authenticate('jwt', { session: false }),userRouter);
 
 app.use('/contacts', passport.authenticate('jwt', { session: false }),contactRouter);
+
+app.use('/rooms', passport.authenticate('jwt', { session: false }),roomRouter);
 
 app.get('/', (req,res)=>{
   res.send('Working');
