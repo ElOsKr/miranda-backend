@@ -9,7 +9,6 @@
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import passport from 'passport';
 import {Strategy as localStrategy} from 'passport-local';
-import { UserModel } from '@src/model/model';
 import { Strategy as JWTstrategy} from 'passport-jwt';
 import { ExtractJwt } from 'passport-jwt';
 
@@ -17,24 +16,19 @@ passport.use(
     'login',
     new localStrategy(
         {
-            usernameField: 'mail',
+            usernameField: 'email',
             passwordField: 'password',
         },
         async (email: string, password: string, done) => {
             try{
-                const user = await UserModel.findOne({ email });
-
-                if(!user) {
-                    return done(null, false, {message: 'User not found'});
+                if(email !== 'admin@admin.com') {
+                  return done(null, false, {message: 'Wrong email'});
+                }
+                if (password !== 'admin') {
+                  return done(null, false, { message: 'Wrong Password' });
                 }
 
-                const validate = await user.isValidPassword(password);
-
-                if (!validate) {
-                    return done(null, false, { message: 'Wrong Password' });
-                  }
-          
-                  return done(null, user, { message: 'Logged in Successfully' });
+                return done(null, {email: 'admin@admin.com', password: 'admin'}, { message: 'Logged in Successfully' });               
             }catch ( error ){
                 done(error);
             }
@@ -45,7 +39,7 @@ passport.use(
 passport.use(
     new JWTstrategy(
       {
-        secretOrKey: process.env.SECRET_KEY,
+        secretOrKey: 'SECRET_KEY',
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
       async (token, done) => {

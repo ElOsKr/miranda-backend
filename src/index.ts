@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-unsafe-call */
+/* eslint-disable no-console */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable @typescript-eslint/no-unsafe-argument */
 /* eslint-disable @typescript-eslint/restrict-template-expressions */
@@ -7,9 +9,10 @@ import bookingRouter from '@src/routes/bookings';
 import bodyParser from 'body-parser';
 import mongoose from 'mongoose';
 import passport from 'passport';
-import { UserModel } from './model/model';
+import cors from 'cors';
 import { loginRouter } from './routes/login';
 import { router } from './routes/secureRoute';
+import'./auth/auth';
 
 async function connection() {
   try{
@@ -26,12 +29,13 @@ async function connection() {
 
 connection();
 
-require('./auth/auth');
-
-
 const app = express();
 
-const PORT = process.env.PORT || 3000;
+const PORT = 3000;
+
+app.use(cors());
+
+app.use(express.json());
 
 app.use(bodyParser.urlencoded({ extended: false}));
 
@@ -39,19 +43,12 @@ app.use('/', loginRouter);
 
 app.use('/user', passport.authenticate('jwt', { session: false }), router);
 
-// app.use(function(err, req, res, next) {
-//   res.status(err.status || 500);
-//   res.json({ error: err });
-// });
-
 app.get('/', (req,res)=>{
   res.send('Working');
 });
 
 app.use(bodyParser.json());
 
-app.use('/api/bookings',bookingRouter);
+app.use('/bookings', passport.authenticate('jwt', { session: false }),bookingRouter);
 
-app.listen(PORT, ()=> {
-  console.log(`Listening on port ${PORT}`);
-});
+app.listen(PORT);
