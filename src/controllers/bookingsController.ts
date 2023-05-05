@@ -79,7 +79,6 @@ export const createOneBooking = (req: express.Request ,res: express.Response) =>
                 },
             });
         }
-        return;
     }
 
     const newBooking: BookingsType = {

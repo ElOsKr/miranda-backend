@@ -283,5 +283,86 @@
     "typeRoom": "Double Superior",
     "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
     "status": "checkIn"
+  },
+  {
+    "photo": "https://www.riazorhotel.com/wp-content/blogs.dir/1623/files/home/HOME_SLIDER_1-1.jpg",
+    "id": "29eb203f-81b3-4203-9903-0f4fda6ac56d",
+    "guest": "Obama",
+    "orderDate": {
+      "date": "29/3/2023",
+      "hour": "00:00 AM"
+    },
+    "checkin": {
+      "date": "29/3/2023",
+      "hour": "09:00 AM"
+    },
+    "checkout": {
+      "date": "30/3/2023",
+      "hour": "21:00 AM"
+    },
+    "roomId": 46,
+    "price": 483,
+    "amenities": [
+      "Test",
+      "Test"
+    ],
+    "typeRoom": "Single",
+    "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+    "specialRequest": "Test",
+    "status": "checkOut"
+  },
+  {
+    "photo": "https://www.riazorhotel.com/wp-content/blogs.dir/1623/files/home/HOME_SLIDER_1-1.jpg",
+    "id": "f44bafcd-7aa8-4b6d-926b-859d6c209eef",
+    "guest": "Obama",
+    "orderDate": {
+      "date": "29/3/2023",
+      "hour": "00:00 AM"
+    },
+    "checkin": {
+      "date": "29/3/2023",
+      "hour": "09:00 AM"
+    },
+    "checkout": {
+      "date": "30/3/2023",
+      "hour": "21:00 AM"
+    },
+    "roomId": 46,
+    "price": 483,
+    "amenities": [
+      "Test",
+      "Test"
+    ],
+    "typeRoom": "Single",
+    "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+    "specialRequest": "Test",
+    "status": "checkOut"
+  },
+  {
+    "photo": "https://www.riazorhotel.com/wp-content/blogs.dir/1623/files/home/HOME_SLIDER_1-1.jpg",
+    "id": "399e70ec-775c-420d-b773-30d8a13365b8",
+    "guest": "Obama",
+    "orderDate": {
+      "date": "29/3/2023",
+      "hour": "00:00 AM"
+    },
+    "checkin": {
+      "date": "29/3/2023",
+      "hour": "09:00 AM"
+    },
+    "checkout": {
+      "date": "30/3/2023",
+      "hour": "21:00 AM"
+    },
+    "roomId": 46,
+    "price": 483,
+    "amenities": [
+      "Test",
+      "Test"
+    ],
+    "typeRoom": "Single",
+    "description": "Maecenas ut massa quis augue luctus tincidunt. Nulla mollis molestie lorem. Quisque ut erat.",
+    "specialRequest": "Test",
+    "status": "checkOut"
   }
 ]

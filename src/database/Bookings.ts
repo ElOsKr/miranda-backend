@@ -35,7 +35,7 @@ export const getOneBooking = (bookingId: string) => {
 export const createNewBooking = (newBooking: BookingsType) => {
     const isAlreadyAdded = bookings.findIndex((booking) => booking.id === newBooking.id);
 
-    if(isAlreadyAdded){
+    if(isAlreadyAdded !== -1){
         throw{
             status: 400,
             message: 'The object already exists',
