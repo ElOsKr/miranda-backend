@@ -1,10 +1,12 @@
 /* eslint-disable node/no-process-env */
 /* eslint-disable indent */
 import 'dotenv/config';
-import mysql from 'mysql2';
+import mysql from 'mysql2/promise';
 
 export const connection = mysql.createConnection({
-    host: process.env.HOST,
-    user: process.env.USER,
-    database: process.env.DATABASE,
+    host:  'localhost',
+    user: 'root',
+    database: 'mirandahotel',
+    namedPlaceholders: true,
+    rowsAsArray: true,
 });

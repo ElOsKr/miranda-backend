@@ -13,9 +13,9 @@ import {
 } from '@src/services/roomsService';
 import express from 'express';
 
-export const getAllRooms = (req: express.Request ,res: express.Response) => {
+export const getAllRooms = async(req: express.Request ,res: express.Response) => {
     try{
-        const allRooms = getRooms();
+        const allRooms = await getRooms();
         res.send({status: 'OK', data: allRooms});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});

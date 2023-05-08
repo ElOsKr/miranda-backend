@@ -1,55 +1,53 @@
+/* eslint-disable @typescript-eslint/no-unsafe-return */
 /* eslint-disable @typescript-eslint/no-unsafe-member-access */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 /* eslint-disable @typescript-eslint/no-unsafe-assignment */
 /* eslint-disable max-len */
 /* eslint-disable indent */
 import { RoomType } from '@src/@types/roomType';
-import rooms from '@src/data/rooms.json';
-import { saveToDatabase } from '@src/util/roomsUtils';
 import { connection } from './connectionDB';
 
-export const getAllRooms = () => {
+export const getAllRooms = async () => {
     try{
-        connection.execute(
-            'SELECT * FROM ``'
-        )
+        const rooms = (await connection).query(
+            'SELECT * FROM rooms',
+        );
         return rooms;
     }catch(error){
         throw { status: 500, message: error};
     }
 };
 
-export const getOneRoom = (roomId: string) => {
+export const getOneRoom = async (roomId: string) => {
 
     try{
-        const room = rooms.find((room) => room.id === roomId);
 
-        if(!room){
-            throw{
-                status: 400,
-                message: `Can't find Room with the id ${roomId}`,
-            };
-        }
+        const room = (await connection).execute(
+            'SELECT * FROM rooms where room_id = ?',
+            [roomId],
+        );
         return room;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const createNewRoom = (newRoom: RoomType) => {
-    const isAlreadyAdded = rooms.findIndex((room) => room.id === newRoom.id);
-
-    if(isAlreadyAdded){
-        throw{
-            status: 400,
-            message: 'The object already exists',
-        };
-    }
+export const createNewRoom = async (newRoom: RoomType) => {
 
     try{
-        const addedRoom = rooms;
-        addedRoom.push(newRoom);
-        saveToDatabase(addedRoom);
+        (await connection).execute(
+            'INSERT INTO rooms (room_id, room_number, room_photo, room_type, room_amenities, room_price, room_offer,room_status) VALUES (?,?,?,?,?,?,?,?)',
+            [
+                newRoom.id,
+                newRoom.number,
+                newRoom.photo,
+                newRoom.type,
+                newRoom.amenities,
+                newRoom.price,
+                newRoom.offer,
+                newRoom.status,
+            ],
+        );
         return newRoom;
     }catch (error){
         throw {
@@ -59,51 +57,25 @@ export const createNewRoom = (newRoom: RoomType) => {
     }
 };
 
-export const updateOneRoom = (roomId: string, changes: any) => {
+export const updateOneRoom = async(roomId: string, changes: any) => {
 
     try{
-        const indexForUpdate = rooms.findIndex((room) => room.id === roomId);
-
-        if(indexForUpdate ===-1){
-            throw{
-                status: 400,
-                message: `Can't find Room with the id ${roomId}`,
-            };
-        }
-
-        rooms.map((room)=> {
-            if(room.id===roomId){
-                const updatedRoom: RoomType = {
-                    ...room,
-                    ...changes,
-                };
-
-                rooms[indexForUpdate] = updatedRoom;
-
-                saveToDatabase(rooms);
-                return updatedRoom;
-            }else{
-                return;
-            }
-        });
+        (await connection).execute(
+            'UPDATE rooms set ? where room_id=?',
+            [changes,roomId],
+        );
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const deleteOneRoom = (roomId: string) => {
+export const deleteOneRoom = async(roomId: string) => {
 
     try{
-        const deleteRoom = rooms.filter((room)=> room.id!==roomId);
-
-        if(deleteRoom.length === rooms.length){
-            throw{
-                status: 400,
-                message: `Can't find Room with the id ${roomId}`,
-            };
-        }
-
-        saveToDatabase(deleteRoom);        
+        (await connection).execute(
+            'DELETE FROM rooms where room_id=?',
+            [roomId],
+        );
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }

@@ -47,12 +47,11 @@ CREATE TABLE bookings (
     room_id varchar(120) NOT NULL,
     booking_price int NOT NULL,
     booking_amenities JSON NOT NULL,
-    room_type varchar(100) NOT NULL,
     booking_description varchar(120) NOT NULL,
     booking_special_request varchar(220),
     booking_status varchar(120) NOT NULL,
 
     PRIMARY KEY(booking_id),
-    FOREIGN KEY(room_id,room_type) REFERENCES rooms(room_id,room_type)
+    FOREIGN KEY(room_id) REFERENCES rooms(room_id)
 )
 ENGINE = InnoDB;

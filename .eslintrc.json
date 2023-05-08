@@ -9,9 +9,6 @@
     "plugin:@typescript-eslint/recommended-requiring-type-checking",
     "plugin:node/recommended"
   ],
-  "parserOptions": {
-    "project": "./tsconfig.json"
-  },
   "rules": {
     "@typescript-eslint/explicit-member-accessibility": "warn",
     "@typescript-eslint/no-misused-promises": 0,

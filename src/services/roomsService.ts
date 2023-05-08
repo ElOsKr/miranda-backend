@@ -9,10 +9,10 @@ import { RoomType } from '@src/@types/roomType';
 import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/Rooms';
 import {uuid}  from 'uuidv4';
 
-export const getRooms = () => {
+export const getRooms = async() => {
     try{
-        const allRooms = getAllRooms();
-        return allRooms;        
+        const allRooms = await getAllRooms();
+        return allRooms[0];        
     }catch(error){
         throw error;
     }
