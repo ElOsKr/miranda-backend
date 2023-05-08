@@ -6,9 +6,13 @@
 import { RoomType } from '@src/@types/roomType';
 import rooms from '@src/data/rooms.json';
 import { saveToDatabase } from '@src/util/roomsUtils';
+import { connection } from './connectionDB';
 
 export const getAllRooms = () => {
     try{
+        connection.execute(
+            'SELECT * FROM ``'
+        )
         return rooms;
     }catch(error){
         throw { status: 500, message: error};
