@@ -8,5 +8,4 @@ export const connection = mysql.createConnection({
     user: 'root',
     database: 'mirandahotel',
     namedPlaceholders: true,
-    rowsAsArray: true,
 });
