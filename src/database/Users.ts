@@ -6,9 +6,13 @@
 import { UserType } from '@src/@types/userType';
 import users from '@src/data/users.json';
 import { saveToDatabase } from '@src/util/usersUtils';
+import { connection } from './connectionDB';
 
-export const getAllUsers = () => {
+export const getAllUsers = async() => {
     try{
+        const users = (await connection).execute(
+            'SELECT * FROM users',
+        )
         return users;
     }catch(error){
         throw { status: 500, message: error};

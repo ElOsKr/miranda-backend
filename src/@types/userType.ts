@@ -1,9 +1,9 @@
 export interface UserType {
-    id: string,
-    name: string,
-    photo: string,
-    email: string,
-    description: string,
-    contact: number,
-    status: boolean 
+    user_id: string,
+    user_name: string,
+    user_photo: string,
+    user_email: string,
+    user_description: string,
+    user_contact: number,
+    user_status: boolean 
 }
