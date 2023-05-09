@@ -1,51 +1,41 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable max-len */
-/* eslint-disable indent */
 import { BookingsType } from '@src/@types/bookingsType';
-import bookings from '@src/data/bookings.json';
-import { saveToDatabase } from '@src/util/bookingsUtils';
+import { connection } from './connectionDB';
 
-export const getAllBookings = () => {
+export const getAllBookings = async () => {
     try{
+        const bookings = (await connection).execute(
+            `SELECT b.*, r.room_type 
+             FROM bookings b
+             JOIN
+             rooms r
+             ON b.room_id = r.room_id
+            `,
+        );
         return bookings;
     }catch(error){
         throw { status: 500, message: error};
     }
 };
 
-export const getOneBooking = (bookingId: string) => {
+export const getOneBooking = async (bookingId: string) => {
 
     try{
-        const booking = bookings.find((booking) => booking.id === bookingId);
-
-        if(!booking){
-            throw{
-                status: 400,
-                message: `Can't find booking with the id ${bookingId}`,
-            };
-        }
+        const booking = (await connection).execute(
+            'SELECT * FROM bookings where booking_id = ?',
+            [bookingId],
+        );
         return booking;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const createNewBooking = (newBooking: BookingsType) => {
-    const isAlreadyAdded = bookings.findIndex((booking) => booking.id === newBooking.id);
-
-    if(isAlreadyAdded !== -1){
-        throw{
-            status: 400,
-            message: 'The object already exists',
-        };
-    }
-
+export const createNewBooking = async (newBooking: BookingsType) => {
     try{
-        const addedBooking = bookings;
-        addedBooking.push(newBooking);
-        saveToDatabase(addedBooking);
+        (await connection).query(
+            'INSERT INTO bookings SET ?',
+            [newBooking],
+        );
         return newBooking;
     }catch (error){
         throw {
@@ -55,51 +45,25 @@ export const createNewBooking = (newBooking: BookingsType) => {
     }
 };
 
-export const updateOneBooking = (bookingId: string, changes: any) => {
+export const updateOneBooking = async (bookingId: string, changes: any) => {
 
     try{
-        const indexForUpdate = bookings.findIndex((booking) => booking.id === bookingId);
-
-        if(indexForUpdate ===-1){
-            throw{
-                status: 400,
-                message: `Can't find booking with the id ${bookingId}`,
-            };
-        }
-
-        bookings.map((booking)=> {
-            if(booking.id===bookingId){
-                const updatedBooking: BookingsType = {
-                    ...booking,
-                    ...changes,
-                };
-
-                bookings[indexForUpdate] = updatedBooking;
-
-                saveToDatabase(bookings);
-                return updatedBooking;
-            }else{
-                return;
-            }
-        });
+        (await connection).query(
+            'UPDATE bookings set ? where booking_id=?',
+            [changes,bookingId],
+        );
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const deleteOneBooking = (bookingId: string) => {
+export const deleteOneBooking = async (bookingId: string) => {
 
     try{
-        const deleteBooking = bookings.filter((booking)=> booking.id!==bookingId);
-
-        if(deleteBooking.length === bookings.length){
-            throw{
-                status: 400,
-                message: `Can't find booking with the id ${bookingId}`,
-            };
-        }
-
-        saveToDatabase(deleteBooking);        
+        (await connection).execute(
+            'DELETE FROM bookings where booking_id=?',
+            [bookingId],
+        );       
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }

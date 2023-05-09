@@ -1,17 +1,10 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
 import { BookingsType } from '@src/@types/bookingsType';
 import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/Bookings';
 import {uuid}  from 'uuidv4';
 
-export const getBookings = () => {
+export const getBookings = async () => {
     try{
-        const allBookings = getAllBookings();
+        const allBookings = await getAllBookings();
         return allBookings;        
     }catch(error){
         throw error;
@@ -19,22 +12,22 @@ export const getBookings = () => {
 
 };
 
-export const getBooking = (bookingId: string) => {
+export const getBooking = async (bookingId: string) => {
     try{
-        const booking = getOneBooking(bookingId);
+        const booking = await getOneBooking(bookingId);
         return booking;
     }catch(error){
         throw error;
     }
 };
 
-export const createBooking = (newBooking: BookingsType) => {
+export const createBooking = async (newBooking: BookingsType) => {
     const BookingToInsert: BookingsType = {
         ...newBooking,
-        id: uuid(),
+        booking_id: uuid(),
     };
     try{
-        const createBooking = createNewBooking(BookingToInsert);
+        const createBooking = await createNewBooking(BookingToInsert);
 
         return createBooking;
     }catch (error){
@@ -42,18 +35,18 @@ export const createBooking = (newBooking: BookingsType) => {
     }
 };
 
-export const updateBooking = (bookingId: string, changes: any) => {
+export const updateBooking = async (bookingId: string, changes: any) => {
     try{
-        const updatedBooking = updateOneBooking(bookingId,changes);
+        const updatedBooking = await updateOneBooking(bookingId,changes);
         return updatedBooking;
     }catch(error){
         throw error;
     }
 };
 
-export const deleteBooking = (bookingId: string) => {
+export const deleteBooking = async (bookingId: string) => {
     try{
-        deleteOneBooking(bookingId);
+        await deleteOneBooking(bookingId);
     }catch(error){
         throw error;
     } 

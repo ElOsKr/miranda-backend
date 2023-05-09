@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 import { UserType } from '@src/@types/userType';
 import { 
   getUsers,
@@ -13,16 +8,16 @@ import {
 } from '@src/services/usersService';
 import express from 'express';
 
-export const getAllUsers = (req: express.Request ,res: express.Response) => {
+export const getAllUsers = async (req: express.Request ,res: express.Response) => {
     try{
-        const allUsers = getUsers();
+        const allUsers = await getUsers();
         res.send({status: 'OK', data: allUsers});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const getOneUser = (req: express.Request ,res: express.Response) => {
+export const getOneUser = async (req: express.Request ,res: express.Response) => {
     const {
         params: {userId},
     } = req;
@@ -34,7 +29,7 @@ export const getOneUser = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        const user = getUser(userId);
+        const user = await getUser(userId);
         res.send({status: 'OK', data: user});       
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
@@ -43,7 +38,7 @@ export const getOneUser = (req: express.Request ,res: express.Response) => {
 
 };
 
-export const createOneUser = (req: express.Request ,res: express.Response) => {
+export const createOneUser = async (req: express.Request ,res: express.Response) => {
     
     const { body } = req;
 
@@ -78,24 +73,25 @@ export const createOneUser = (req: express.Request ,res: express.Response) => {
     }
 
     const newUser: UserType = {
-        id: body.id,
-        name: body.name,
-        photo: body.photo,
-        email: body.email,
-        description: body.description,
-        contact: body.contact,
-        status: body.status,
+        user_id: body.id,
+        user_name: body.name,
+        user_password: body.password,
+        user_photo: body.photo,
+        user_email: body.email,
+        user_description: body.description,
+        user_contact: body.contact,
+        user_status: body.status,
     };
 
     try{
-        const createdUser = createUser(newUser);
+        const createdUser = await createUser(newUser);
         res.send({status: 'OK', data: createdUser});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const updateOneUser = (req: express.Request ,res: express.Response) => {
+export const updateOneUser = async (req: express.Request ,res: express.Response) => {
     const {
         body,
         params: { userId },
@@ -109,7 +105,7 @@ export const updateOneUser = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        const updatedUser = updateUser(userId,body);
+        const updatedUser = await updateUser(userId,body);
         res.send({status: 'OK', data: updatedUser});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
@@ -117,7 +113,7 @@ export const updateOneUser = (req: express.Request ,res: express.Response) => {
 
 };
 
-export const deleteOneUser = (req: express.Request ,res: express.Response) => {
+export const deleteOneUser = async (req: express.Request ,res: express.Response) => {
     const {
         params: { userId },
     }= req;
@@ -130,7 +126,7 @@ export const deleteOneUser = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        deleteUser(userId);
+        await deleteUser(userId);
         res.send({status: 'OK'});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});

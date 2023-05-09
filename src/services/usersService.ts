@@ -1,40 +1,33 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
 import { UserType } from '@src/@types/userType';
 import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/Users';
 import {uuid}  from 'uuidv4';
 
-export const getUsers = () => {
+export const getUsers = async () => {
     try{
-        const allUsers = getAllUsers();
-        return allUsers;        
+        const allUsers = await getAllUsers();
+        return allUsers[0];        
     }catch(error){
         throw error;
     }
 
 };
 
-export const getUser = (UserId: string) => {
+export const getUser = async (UserId: string) => {
     try{
-        const user = getOneUser(UserId);
-        return user;
+        const user = await getOneUser(UserId);
+        return user[0];
     }catch(error){
         throw error;
     }
 };
 
-export const createUser = (newUser: UserType) => {
+export const createUser = async (newUser: UserType) => {
     const userToInsert: UserType = {
         ...newUser,
-        id: uuid(),
+        user_id: uuid(),
     };
     try{
-        const createUser = createNewUser(userToInsert);
+        const createUser = await createNewUser(userToInsert);
 
         return createUser;
     }catch (error){
@@ -42,18 +35,18 @@ export const createUser = (newUser: UserType) => {
     }
 };
 
-export const updateUser = (userId: string, changes: any) => {
+export const updateUser = async (userId: string, changes: any) => {
     try{
-        const updatedUser = updateOneUser(userId,changes);
+        const updatedUser = await updateOneUser(userId,changes);
         return updatedUser;
     }catch(error){
         throw error;
     }
 };
 
-export const deleteUser = (userId: string) => {
+export const deleteUser = async (userId: string) => {
     try{
-        deleteOneUser(userId);
+        await deleteOneUser(userId);
     }catch(error){
         throw error;
     } 

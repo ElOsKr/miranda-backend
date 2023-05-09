@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 import { RoomType } from '@src/@types/roomType';
 import { 
   getRooms,
@@ -43,7 +38,7 @@ export const getOneRoom = async(req: express.Request ,res: express.Response) => 
 
 };
 
-export const createOneRoom = (req: express.Request ,res: express.Response) => {
+export const createOneRoom = async(req: express.Request ,res: express.Response) => {
     
     const { body } = req;
 
@@ -88,14 +83,14 @@ export const createOneRoom = (req: express.Request ,res: express.Response) => {
     };
 
     try{
-        const createdRoom = createRoom(newRoom);
+        const createdRoom = await createRoom(newRoom);
         res.send({status: 'OK', data: createdRoom});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const updateOneRoom = (req: express.Request ,res: express.Response) => {
+export const updateOneRoom = async (req: express.Request ,res: express.Response) => {
     const {
         body,
         params: { roomId },
@@ -109,7 +104,7 @@ export const updateOneRoom = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        const updatedRoom = updateRoom(roomId,body);
+        const updatedRoom = await updateRoom(roomId,body);
         res.send({status: 'OK', data: updatedRoom});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
@@ -117,7 +112,7 @@ export const updateOneRoom = (req: express.Request ,res: express.Response) => {
 
 };
 
-export const deleteOneRoom = (req: express.Request ,res: express.Response) => {
+export const deleteOneRoom = async (req: express.Request ,res: express.Response) => {
     const {
         params: { roomId },
     }= req;
@@ -130,7 +125,7 @@ export const deleteOneRoom = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        deleteRoom(roomId);
+        await deleteRoom(roomId);
         res.send({status: 'OK'});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});

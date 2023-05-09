@@ -1,6 +1,7 @@
 export interface UserType {
     user_id: string,
     user_name: string,
+    user_password: string
     user_photo: string,
     user_email: string,
     user_description: string,

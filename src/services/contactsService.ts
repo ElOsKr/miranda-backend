@@ -1,59 +1,51 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
 import { ContactsType } from '@src/@types/contactType';
 import { createNewContact, deleteOneContact, getAllContacts, getOneContact, updateOneContact } from '@src/database/Contact';
 import {uuid}  from 'uuidv4';
 
-export const getContacts = () => {
+export const getContacts = async () => {
     try{
-        const allContacts = getAllContacts();
-        return allContacts;        
+        const allContacts = await getAllContacts();
+        return allContacts[0];        
     }catch(error){
         throw error;
     }
 
 };
 
-export const getContact = (contactId: string) => {
+export const getContact = async (contactId: string) => {
     try{
-        const contact = getOneContact(contactId);
-        return contact;
+        const contact = await getOneContact(contactId);
+        return contact[0];
     }catch(error){
         throw error;
     }
 };
 
-export const createContact = (newContact: ContactsType) => {
+export const createContact = async (newContact: ContactsType) => {
     const contactToInsert: ContactsType = {
         ...newContact,
-        id: uuid(),
+        contact_id: uuid(),
     };
     try{
-        const createContact = createNewContact(contactToInsert);
-
+        const createContact = await createNewContact(contactToInsert);
         return createContact;
     }catch (error){
         throw error;
     }
 };
 
-export const updateContact = (contactId: string, changes: any) => {
+export const updateContact = async (contactId: string, changes: any) => {
     try{
-        const updatedContact = updateOneContact(contactId,changes);
+        const updatedContact = await updateOneContact(contactId,changes);
         return updatedContact;
     }catch(error){
         throw error;
     }
 };
 
-export const deleteContact = (contactId: string) => {
+export const deleteContact = async (contactId: string) => {
     try{
-        deleteOneContact(contactId);
+       await deleteOneContact(contactId);
     }catch(error){
         throw error;
     } 

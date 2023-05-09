@@ -1,11 +1,4 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable max-len */
-/* eslint-disable indent */
 import { UserType } from '@src/@types/userType';
-import users from '@src/data/users.json';
-import { saveToDatabase } from '@src/util/usersUtils';
 import { connection } from './connectionDB';
 
 export const getAllUsers = async() => {
@@ -19,37 +12,24 @@ export const getAllUsers = async() => {
     }
 };
 
-export const getOneUser = (userId: string) => {
-
+export const getOneUser = async (userId: string) => {
     try{
-        const user = users.find((user) => user.id === userId);
-
-        if(!user){
-            throw{
-                status: 400,
-                message: `Can't find user with the id ${userId}`,
-            };
-        }
+        const user = (await connection).execute(
+            'SELECT * FROM users where user_id = ?',
+            [userId],
+        );
         return user;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const createNewUser = (newUser: UserType) => {
-    const isAlreadyAdded = users.findIndex((user) => user.id === newUser.id);
-
-    if(isAlreadyAdded){
-        throw{
-            status: 400,
-            message: 'The object already exists',
-        };
-    }
-
+export const createNewUser = async(newUser: UserType) => {
     try{
-        const addedUser = users;
-        addedUser.push(newUser);
-        saveToDatabase(addedUser);
+        (await connection).query(
+            'INSERT INTO users SET ?',
+            [newUser],
+        );
         return newUser;
     }catch (error){
         throw {
@@ -59,51 +39,24 @@ export const createNewUser = (newUser: UserType) => {
     }
 };
 
-export const updateOneUser = (userId: string, changes: any) => {
+export const updateOneUser = async(userId: string, changes: any) => {
 
     try{
-        const indexForUpdate = users.findIndex((user) => user.id === userId);
-
-        if(indexForUpdate ===-1){
-            throw{
-                status: 400,
-                message: `Can't find user with the id ${userId}`,
-            };
-        }
-
-        users.map((user)=> {
-            if(user.id===userId){
-                const updatedUser: UserType = {
-                    ...user,
-                    ...changes,
-                };
-
-                users[indexForUpdate] = updatedUser;
-
-                saveToDatabase(users);
-                return updatedUser;
-            }else{
-                return;
-            }
-        });
+        (await connection).query(
+            'UPDATE users set ? where user_id=?',
+            [changes,userId],
+        );
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const deleteOneUser = (userId: string) => {
-
+export const deleteOneUser = async(userId: string) => {
     try{
-        const deleteUser = users.filter((user)=> user.id!==userId);
-
-        if(deleteUser.length === users.length){
-            throw{
-                status: 400,
-                message: `Can't find user with the id ${userId}`,
-            };
-        }
-
-        saveToDatabase(deleteUser);        
+        (await connection).execute(
+            'DELETE FROM users where user_id=?',
+            [userId],
+        );       
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }

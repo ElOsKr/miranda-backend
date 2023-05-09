@@ -1,8 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
-/* eslint-disable max-len */
 import { BookingsType } from '@src/@types/bookingsType';
 import { 
   getBookings,
@@ -13,16 +8,16 @@ import {
 } from '@src/services/bookingsService';
 import express from 'express';
 
-export const getAllBookings = (req: express.Request ,res: express.Response) => {
+export const getAllBookings = async (req: express.Request ,res: express.Response) => {
     try{
-        const allBookings = getBookings();
+        const allBookings = await getBookings();
         res.send({status: 'OK', data: allBookings});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const getOneBooking = (req: express.Request ,res: express.Response) => {
+export const getOneBooking = async (req: express.Request ,res: express.Response) => {
     const {
         params: {bookingId},
     } = req;
@@ -34,7 +29,7 @@ export const getOneBooking = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        const booking = getBooking(bookingId);
+        const booking = await getBooking(bookingId);
         res.send({status: 'OK', data: booking});       
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
@@ -43,7 +38,7 @@ export const getOneBooking = (req: express.Request ,res: express.Response) => {
 
 };
 
-export const createOneBooking = (req: express.Request ,res: express.Response) => {
+export const createOneBooking = async (req: express.Request ,res: express.Response) => {
     
     const { body } = req;
 
@@ -82,39 +77,29 @@ export const createOneBooking = (req: express.Request ,res: express.Response) =>
     }
 
     const newBooking: BookingsType = {
-        photo: body.photo,
-        id: body.id,
-        guest: body.guest,
-        orderDate: {
-          date: body.orderDate.date,
-          hour: body.orderDate.hour,
-          },
-        checkin: {
-            date: body.checkin.date,
-            hour: body.checkin.hour,
-          },
-        checkout: {
-            date: body.checkout.date,
-            hour: body.checkout.hour,
-          },
-        roomId: body.roomId,
-        price: body.price,
-        amenities: body.amenities,
-        typeRoom: body.typeRoom,
-        description: body.description,
-        specialRequest: body.specialRequest,
-        status: body.status,
+        booking_photo: body.photo,
+        booking_id: body.id,
+        booking_guest: body.guest,
+        booking_orderDate: body.orderDate.date,
+        booking_checkin: body.checkin.date,
+        booking_checkout:body.checkout.date,
+        room_Id: body.roomId,
+        booking_price: body.price,
+        booking_amenities: body.amenities,
+        booking_description: body.description,
+        booking_specialRequest: body.specialRequest,
+        booking_status: body.status,
     };
 
     try{
-        const createdBooking = createBooking(newBooking);
+        const createdBooking = await createBooking(newBooking);
         res.send({status: 'OK', data: createdBooking});
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
-export const updateOneBooking = (req: express.Request ,res: express.Response) => {
+export const updateOneBooking = async (req: express.Request ,res: express.Response) => {
     const {
         body,
         params: { bookingId },
@@ -128,7 +113,7 @@ export const updateOneBooking = (req: express.Request ,res: express.Response) =>
     }
 
     try{
-        const updatedBooking = updateBooking(bookingId,body);
+        const updatedBooking = await updateBooking(bookingId,body);
         res.send({status: 'OK', data: updatedBooking});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
@@ -136,7 +121,7 @@ export const updateOneBooking = (req: express.Request ,res: express.Response) =>
 
 };
 
-export const deleteOneBooking = (req: express.Request ,res: express.Response) => {
+export const deleteOneBooking = async (req: express.Request ,res: express.Response) => {
     const {
         params: { bookingId },
     }= req;
@@ -149,7 +134,7 @@ export const deleteOneBooking = (req: express.Request ,res: express.Response) =>
     }
 
     try{
-        deleteBooking(bookingId);
+        await deleteBooking(bookingId);
         res.send({status: 'OK'});        
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});

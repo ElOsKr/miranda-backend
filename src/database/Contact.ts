@@ -1,51 +1,35 @@
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable max-len */
-/* eslint-disable indent */
 import { ContactsType } from '@src/@types/contactType';
-import contacts from '@src/data/contact.json';
-import { saveToDatabase } from '@src/util/contactsUtils';
+import { connection } from './connectionDB';
 
-export const getAllContacts = () => {
+export const getAllContacts = async () => {
     try{
+        const contacts = (await connection).execute(
+            'SELECT * FROM contacts',
+        );
         return contacts;
     }catch(error){
         throw { status: 500, message: error};
     }
 };
 
-export const getOneContact = (contactId: string) => {
-
+export const getOneContact = async (contactId: string) => {
     try{
-        const contact = contacts.find((contact) => contact.id === contactId);
-
-        if(!contact){
-            throw{
-                status: 400,
-                message: `Can't find Contact with the id ${contactId}`,
-            };
-        }
+        const contact = (await connection).execute(
+            'SELECT * FROM contacts where contact_id = ?',
+            [contactId],
+        );
         return contact;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const createNewContact = (newContact: ContactsType) => {
-    const isAlreadyAdded = contacts.findIndex((contact) => contact.id === newContact.id);
-
-    if(isAlreadyAdded){
-        throw{
-            status: 400,
-            message: 'The object already exists',
-        };
-    }
-
+export const createNewContact = async (newContact: ContactsType) => {
     try{
-        const addedContact = contacts;
-        addedContact.push(newContact);
-        saveToDatabase(addedContact);
+        (await connection).query(
+            'INSERT INTO contacts SET ?',
+            [newContact],
+        );
         return newContact;
     }catch (error){
         throw {
@@ -55,51 +39,23 @@ export const createNewContact = (newContact: ContactsType) => {
     }
 };
 
-export const updateOneContact = (contactId: string, changes: any) => {
-
+export const updateOneContact = async (contactId: string, changes: any) => {
     try{
-        const indexForUpdate = contacts.findIndex((contact) => contact.id === contactId);
-
-        if(indexForUpdate ===-1){
-            throw{
-                status: 400,
-                message: `Can't find Contact with the id ${contactId}`,
-            };
-        }
-
-        contacts.map((contact)=> {
-            if(contact.id===contactId){
-                const updatedContact: ContactsType = {
-                    ...contact,
-                    ...changes,
-                };
-
-                contacts[indexForUpdate] = updatedContact;
-
-                saveToDatabase(contacts);
-                return updatedContact;
-            }else{
-                return;
-            }
-        });
+        (await connection).query(
+            'UPDATE contact set ? where contact_id=?',
+            [changes,contactId],
+        );
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const deleteOneContact = (contactId: string) => {
-
+export const deleteOneContact = async (contactId: string) => {
     try{
-        const deleteContact = contacts.filter((contact)=> contact.id!==contactId);
-
-        if(deleteContact.length === contacts.length){
-            throw{
-                status: 400,
-                message: `Can't find Contact with the id ${contactId}`,
-            };
-        }
-
-        saveToDatabase(deleteContact);        
+        (await connection).execute(
+            'DELETE FROM contacts where contact_id=?',
+            [contactId],
+        );
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }

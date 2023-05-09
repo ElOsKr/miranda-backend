@@ -1,11 +1,7 @@
 export interface ContactsType {
-    id: string,
-    customer: {
-        name: string,
-        email: string,
-        phone: number
-    },
-    subject: string,
-    comment: string,
-    status?: string
+    contact_id: string,
+    contact_customer: string,
+    contact_subject: string,
+    contact_comment: string,
+    contact_status?: boolean
 }

@@ -1,10 +1,3 @@
-/* eslint-disable no-useless-catch */
-/* eslint-disable @typescript-eslint/no-explicit-any */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable indent */
 import { RoomType } from '@src/@types/roomType';
 import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/Rooms';
 import {uuid}  from 'uuidv4';
@@ -19,7 +12,7 @@ export const getRooms = async() => {
 
 };
 
-export const getRoom = async(roomId: string) => {
+export const getRoom = async (roomId: string) => {
     try{
         const room = await getOneRoom(roomId);
         return room[0];
@@ -28,13 +21,13 @@ export const getRoom = async(roomId: string) => {
     }
 };
 
-export const createRoom = (newRoom: RoomType) => {
+export const createRoom = async (newRoom: RoomType) => {
     const roomToInsert: RoomType = {
         ...newRoom,
         room_id: uuid(),
     };
     try{
-        const createRoom = createNewRoom(roomToInsert);
+        const createRoom = await createNewRoom(roomToInsert);
 
         return createRoom;
     }catch (error){
@@ -42,18 +35,18 @@ export const createRoom = (newRoom: RoomType) => {
     }
 };
 
-export const updateRoom = (roomId: string, changes: any) => {
+export const updateRoom = async (roomId: string, changes: any) => {
     try{
-        const updatedRoom = updateOneRoom(roomId,changes);
+        const updatedRoom = await updateOneRoom(roomId,changes);
         return updatedRoom;
     }catch(error){
         throw error;
     }
 };
 
-export const deleteRoom = (roomId: string) => {
+export const deleteRoom = async (roomId: string) => {
     try{
-        deleteOneRoom(roomId);
+        await deleteOneRoom(roomId);
     }catch(error){
         throw error;
     } 

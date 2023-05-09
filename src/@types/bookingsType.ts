@@ -1,24 +1,14 @@
 export interface BookingsType {
-    photo: string,
-    id: string,
-    guest: string,
-    orderDate: {
-      date: string,
-      hour: string
-      },
-    checkin: {
-      date: string,
-      hour: string
-      },
-    checkout: {
-      date: string,
-      hour: string
-      },
-    roomId: number,
-    price: number,
-    amenities: string[],
-    typeRoom: string,
-    specialRequest?: string
-    description: string,
-    status: string
+  booking_photo: string,
+  booking_id: string,
+  booking_guest: string,
+  booking_orderDate: Date,
+  booking_checkin: Date,
+  booking_checkout: Date,
+  room_Id: string,
+  booking_price: number,
+  booking_amenities: string,
+  booking_specialRequest?: string
+  booking_description: string,
+  booking_status: string
 }
