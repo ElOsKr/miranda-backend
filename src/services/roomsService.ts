@@ -19,10 +19,10 @@ export const getRooms = async() => {
 
 };
 
-export const getRoom = (roomId: string) => {
+export const getRoom = async(roomId: string) => {
     try{
-        const room = getOneRoom(roomId);
-        return room;
+        const room = await getOneRoom(roomId);
+        return room[0];
     }catch(error){
         throw error;
     }
@@ -31,7 +31,7 @@ export const getRoom = (roomId: string) => {
 export const createRoom = (newRoom: RoomType) => {
     const roomToInsert: RoomType = {
         ...newRoom,
-        id: uuid(),
+        room_id: uuid(),
     };
     try{
         const createRoom = createNewRoom(roomToInsert);

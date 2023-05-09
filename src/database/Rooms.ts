@@ -9,7 +9,7 @@ import { connection } from './connectionDB';
 
 export const getAllRooms = async () => {
     try{
-        const rooms = (await connection).query(
+        const rooms = (await connection).execute(
             'SELECT * FROM rooms',
         );
         return rooms;
@@ -35,18 +35,9 @@ export const getOneRoom = async (roomId: string) => {
 export const createNewRoom = async (newRoom: RoomType) => {
 
     try{
-        (await connection).execute(
-            'INSERT INTO rooms (room_id, room_number, room_photo, room_type, room_amenities, room_price, room_offer,room_status) VALUES (?,?,?,?,?,?,?,?)',
-            [
-                newRoom.id,
-                newRoom.number,
-                newRoom.photo,
-                newRoom.type,
-                newRoom.amenities,
-                newRoom.price,
-                newRoom.offer,
-                newRoom.status,
-            ],
+        (await connection).query(
+            'INSERT INTO rooms SET ?',
+            [newRoom],
         );
         return newRoom;
     }catch (error){
@@ -60,7 +51,7 @@ export const createNewRoom = async (newRoom: RoomType) => {
 export const updateOneRoom = async(roomId: string, changes: any) => {
 
     try{
-        (await connection).execute(
+        (await connection).query(
             'UPDATE rooms set ? where room_id=?',
             [changes,roomId],
         );

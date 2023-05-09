@@ -11,12 +11,12 @@ const roomRouter = express.Router();
   
 roomRouter.get('/',getAllRooms);
   
-roomRouter.get('/:RoomId',getOneRoom);
+roomRouter.get('/:roomId',getOneRoom);
   
 roomRouter.post('/', createOneRoom);
   
-roomRouter.patch('/:RoomId', updateOneRoom);
+roomRouter.patch('/:roomId', updateOneRoom);
   
-roomRouter.delete('/:RoomId',deleteOneRoom);
+roomRouter.delete('/:roomId',deleteOneRoom);
   
 export default roomRouter;

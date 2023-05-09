@@ -22,7 +22,7 @@ export const getAllRooms = async(req: express.Request ,res: express.Response) =>
     }
 };
 
-export const getOneRoom = (req: express.Request ,res: express.Response) => {
+export const getOneRoom = async(req: express.Request ,res: express.Response) => {
     const {
         params: {roomId},
     } = req;
@@ -34,7 +34,7 @@ export const getOneRoom = (req: express.Request ,res: express.Response) => {
     }
 
     try{
-        const Room = getRoom(roomId);
+        const Room = await getRoom(roomId);
         res.send({status: 'OK', data: Room});       
     }catch(error){
         res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
@@ -76,14 +76,14 @@ export const createOneRoom = (req: express.Request ,res: express.Response) => {
     }
 
     const newRoom: RoomType = {
-        photo: body.photo,
-        number: body.number,
-        id: body.id,
-        type: body.type,
-        price: body.price,
-        amenities: body.amenities,
-        status: body.status,
-        offer: body.offer,
+        room_photo: body.photo,
+        room_number: body.number,
+        room_id: body.id,
+        room_type: body.type,
+        room_price: body.price,
+        room_amenities: body.amenities,
+        room_status: body.status,
+        room_offer: body.offer,
 
     };
 
