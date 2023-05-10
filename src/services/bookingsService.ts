@@ -1,6 +1,5 @@
 import { BookingsType } from '@src/@types/bookingsType';
 import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/Bookings';
-import {uuid}  from 'uuidv4';
 
 export const getBookings = async () => {
     try{
@@ -22,13 +21,8 @@ export const getBooking = async (bookingId: string) => {
 };
 
 export const createBooking = async (newBooking: BookingsType) => {
-    const BookingToInsert: BookingsType = {
-        ...newBooking,
-        booking_id: uuid(),
-    };
     try{
-        const createBooking = await createNewBooking(BookingToInsert);
-
+        const createBooking = await createNewBooking(newBooking);
         return createBooking;
     }catch (error){
         throw error;

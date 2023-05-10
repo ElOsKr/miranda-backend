@@ -7,6 +7,7 @@ import {
   deleteBooking, 
 } from '@src/services/bookingsService';
 import express from 'express';
+import { uuid } from 'uuidv4';
 
 export const getAllBookings = async (req: express.Request ,res: express.Response) => {
     try{
@@ -43,18 +44,16 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     const { body } = req;
 
     if(
-        !body.photo||
-        !body.id||
-        !body.guest||
-        !body.orderDate||
-        !body.checkin||
-        !body.checkout||
-        !body.roomId||
-        !body.price||
-        !body.amenities||
-        !body.typeRoom||
-        !body.description||
-        !body.status
+        !body.booking_photo||
+        !body.booking_guest||
+        !body.booking_orderDate||
+        !body.booking_checkin||
+        !body.booking_checkout||
+        !body.room_id||
+        !body.booking_price||
+        !body.booking_amenities||
+        !body.booking_description||
+        (!body.booking_status && typeof body.booking_status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -66,7 +65,7 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     }
     
     for ( const key in body ){
-        if(!body[key]){
+        if(!body[key] && body.booking_status !==false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -77,18 +76,18 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     }
 
     const newBooking: BookingsType = {
-        booking_photo: body.photo,
-        booking_id: body.id,
-        booking_guest: body.guest,
-        booking_orderDate: body.orderDate.date,
-        booking_checkin: body.checkin.date,
-        booking_checkout:body.checkout.date,
-        room_Id: body.roomId,
-        booking_price: body.price,
-        booking_amenities: body.amenities,
-        booking_description: body.description,
-        booking_specialRequest: body.specialRequest,
-        booking_status: body.status,
+        booking_photo: body.booking_photo,
+        booking_id: uuid(),
+        booking_guest: body.booking_guest,
+        booking_orderDate: body.booking_orderDate,
+        booking_checkin: body.booking_checkin,
+        booking_checkout:body.booking_checkout,
+        room_Id: body.room_id,
+        booking_price: body.booking_price,
+        booking_amenities: body.booking_amenities,
+        booking_description: body.booking_description,
+        booking_specialRequest: body.booking_specialRequest,
+        booking_status: body.booking_status,
     };
 
     try{
