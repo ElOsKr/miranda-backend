@@ -1,5 +1,6 @@
 import { UserType } from '@src/@types/userType';
 import { connection } from './connectionDB';
+import { userSchema } from '../util/validate/usersValidate';
 
 export const getAllUsers = async() => {
     try{
@@ -26,6 +27,7 @@ export const getOneUser = async (userId: string) => {
 
 export const createNewUser = async(newUser: UserType) => {
     try{
+        userSchema.validate(newUser);
         (await connection).query(
             'INSERT INTO users SET ?',
             [newUser],

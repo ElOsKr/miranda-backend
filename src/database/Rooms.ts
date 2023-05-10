@@ -27,7 +27,7 @@ export const getOneRoom = async (roomId: string) => {
 
 export const createNewRoom = async (newRoom: RoomType) => {
     try{
-        await roomSchema.validateAsync(newRoom);
+        roomSchema.validate(newRoom);
         (await connection).query(
             'INSERT INTO rooms SET ?',
             [newRoom]

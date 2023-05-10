@@ -14,6 +14,7 @@ import bcrypt from 'bcrypt';
 let rooms_ids: string[] = [];
 
 async function main(): Promise<void>{
+    (await connection).connect();
     createRooms(10);
     createUsers(10);
     createContacts(10);

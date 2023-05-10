@@ -1,6 +1,6 @@
 import { BookingsType } from '@src/@types/bookingsType';
 import { connection } from './connectionDB';
-import { bookingSchema } from '@src/util/validate/bookingsValidate';
+import { bookingSchema } from '../util/validate/bookingsValidate';
 
 export const getAllBookings = async () => {
     try{
@@ -33,7 +33,7 @@ export const getOneBooking = async (bookingId: string) => {
 
 export const createNewBooking = async (newBooking: BookingsType) => {
     try{
-        await bookingSchema.validateAsync(newBooking);
+        bookingSchema.validate(newBooking);
         (await connection).query(
             'INSERT INTO bookings SET ?',
             [newBooking],
