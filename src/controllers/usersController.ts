@@ -7,6 +7,8 @@ import {
   deleteUser, 
 } from '@src/services/usersService';
 import express from 'express';
+import { uuid } from 'uuidv4';
+import bcrypt from 'bcrypt';
 
 export const getAllUsers = async (req: express.Request ,res: express.Response) => {
     try{
@@ -43,13 +45,13 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     const { body } = req;
 
     if(
-        !body.id||
-        !body.name||
-        !body.photo||
-        !body.email||
-        !body.description||
-        !body.contact||
-        !body.status
+        !body.user_name||
+        !body.user_password||
+        !body.user_photo||
+        !body.user_email||
+        !body.user_description||
+        !body.user_contact||
+        (!body.user_status && typeof body.user_status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -57,11 +59,10 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
                 error: 'Cannot create object',
             },
         });
-        return;
     }
     
     for ( const key in body ){
-        if(!body[key]){
+        if(!body[key] && body.user_status !== false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -69,18 +70,21 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
                 },
             });
         }
-        return;
     }
 
+    const salt = await bcrypt.genSalt(10);
+    const password = await bcrypt.hash(body.user_password,salt);
+    console.log(password)
+
     const newUser: UserType = {
-        user_id: body.id,
-        user_name: body.name,
-        user_password: body.password,
-        user_photo: body.photo,
-        user_email: body.email,
-        user_description: body.description,
-        user_contact: body.contact,
-        user_status: body.status,
+        user_id: uuid(),
+        user_name: body.user_name,
+        user_password: password,
+        user_photo: body.user_photo,
+        user_email: body.user_email,
+        user_description: body.user_description,
+        user_contact: body.user_contact,
+        user_status: body.user_status,
     };
 
     try{

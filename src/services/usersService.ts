@@ -1,6 +1,5 @@
 import { UserType } from '@src/@types/userType';
 import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/Users';
-import {uuid}  from 'uuidv4';
 
 export const getUsers = async () => {
     try{
@@ -22,13 +21,8 @@ export const getUser = async (UserId: string) => {
 };
 
 export const createUser = async (newUser: UserType) => {
-    const userToInsert: UserType = {
-        ...newUser,
-        user_id: uuid(),
-    };
     try{
-        const createUser = await createNewUser(userToInsert);
-
+        const createUser = await createNewUser(newUser);
         return createUser;
     }catch (error){
         throw error;
