@@ -7,6 +7,7 @@ import {
   deleteRoom, 
 } from '@src/services/roomsService';
 import express from 'express';
+import { uuid } from 'uuidv4';
 
 export const getAllRooms = async(req: express.Request ,res: express.Response) => {
     try{
@@ -43,11 +44,11 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     const { body } = req;
 
     if(
-        !body.photo||
-        !body.number||
-        !body.id||
-        !body.price||
-        !body.status
+        !body.room_photo||
+        !body.room_number||
+        !body.room_price||
+        !body.room_type||
+        (!body.room_status && typeof body.room_status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -59,7 +60,7 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     }
     
     for ( const key in body ){
-        if(!body[key]){
+        if(!body[key] && body[key] !==false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -67,18 +68,17 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
                 },
             });
         }
-        return;
     }
 
     const newRoom: RoomType = {
-        room_photo: body.photo,
-        room_number: body.number,
-        room_id: body.id,
-        room_type: body.type,
-        room_price: body.price,
-        room_amenities: body.amenities,
-        room_status: body.status,
-        room_offer: body.offer,
+        room_id: uuid(),
+        room_photo: body.room_photo,
+        room_number: body.room_number,
+        room_type: body.room_type,
+        room_price: body.room_price,
+        room_amenities: body.room_amenities,
+        room_status: (body.room_status),
+        room_offer: body.room_offer,
 
     };
 

@@ -1,5 +1,6 @@
 import { ContactsType } from '@src/@types/contactType';
 import { connection } from './connectionDB';
+import { contactSchema } from '@src/util/validate/contactsValidate';
 
 export const getAllContacts = async () => {
     try{
@@ -26,6 +27,7 @@ export const getOneContact = async (contactId: string) => {
 
 export const createNewContact = async (newContact: ContactsType) => {
     try{
+        await contactSchema.validateAsync(newContact);
         (await connection).query(
             'INSERT INTO contacts SET ?',
             [newContact],

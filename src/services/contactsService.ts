@@ -1,6 +1,5 @@
 import { ContactsType } from '@src/@types/contactType';
 import { createNewContact, deleteOneContact, getAllContacts, getOneContact, updateOneContact } from '@src/database/Contact';
-import {uuid}  from 'uuidv4';
 
 export const getContacts = async () => {
     try{
@@ -22,12 +21,8 @@ export const getContact = async (contactId: string) => {
 };
 
 export const createContact = async (newContact: ContactsType) => {
-    const contactToInsert: ContactsType = {
-        ...newContact,
-        contact_id: uuid(),
-    };
     try{
-        const createContact = await createNewContact(contactToInsert);
+        const createContact = await createNewContact(newContact);
         return createContact;
     }catch (error){
         throw error;

@@ -7,6 +7,7 @@ import {
   deleteContact, 
 } from '@src/services/contactsService';
 import express from 'express';
+import { uuid } from 'uuidv4';
 
 export const getAllContacts = async (req: express.Request ,res: express.Response) => {
     try{
@@ -43,10 +44,10 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
     const { body } = req;
 
     if(
-        !body.id||
-        !body.customer||
-        !body.subject||
-        !body.comment
+        !body.contact_customer||
+        !body.contact_subject||
+        !body.contact_comment||
+        (!body.contact_status && typeof body.contact_status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -54,11 +55,10 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
                 error: 'Cannot create object',
             },
         });
-        return;
     }
     
     for ( const key in body ){
-        if(!body[key]){
+        if(!body[key] && body.contact_status!==false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -66,15 +66,14 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
                 },
             });
         }
-        return;
     }
 
     const newContact: ContactsType = {
-        contact_id: body.id,
-        contact_customer: JSON.stringify(body.customer),
-        contact_subject: body.subject,
-        contact_comment: body.comment,
-        contact_status: body.status,
+        contact_id: uuid(),
+        contact_customer: JSON.stringify(body.contact_customer),
+        contact_subject: body.contact_subject,
+        contact_comment: body.contact_comment,
+        contact_status: body.contact_status,
     };
 
     try{

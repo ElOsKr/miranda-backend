@@ -1,6 +1,5 @@
 import { RoomType } from '@src/@types/roomType';
 import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/Rooms';
-import {uuid}  from 'uuidv4';
 
 export const getRooms = async() => {
     try{
@@ -9,7 +8,6 @@ export const getRooms = async() => {
     }catch(error){
         throw error;
     }
-
 };
 
 export const getRoom = async (roomId: string) => {
@@ -22,13 +20,8 @@ export const getRoom = async (roomId: string) => {
 };
 
 export const createRoom = async (newRoom: RoomType) => {
-    const roomToInsert: RoomType = {
-        ...newRoom,
-        room_id: uuid(),
-    };
     try{
-        const createRoom = await createNewRoom(roomToInsert);
-
+        const createRoom = await createNewRoom(newRoom);
         return createRoom;
     }catch (error){
         throw error;

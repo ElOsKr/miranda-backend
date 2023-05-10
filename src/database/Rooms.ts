@@ -1,5 +1,6 @@
 import { RoomType } from '@src/@types/roomType';
 import { connection } from './connectionDB';
+import { roomSchema } from '../util/validate/roomsValidate';
 
 export const getAllRooms = async () => {
     try{
@@ -26,9 +27,10 @@ export const getOneRoom = async (roomId: string) => {
 
 export const createNewRoom = async (newRoom: RoomType) => {
     try{
+        await roomSchema.validateAsync(newRoom);
         (await connection).query(
             'INSERT INTO rooms SET ?',
-            [newRoom],
+            [newRoom]
         );
         return newRoom;
     }catch (error){
