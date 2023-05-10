@@ -43,9 +43,9 @@ CREATE TABLE bookings (
     booking_id varchar(120) NOT NULL,
     booking_photo varchar(2000) NOT NULL,
     booking_guest varchar(120) NOT NULL,
-    booking_orderDate varchar(100) NOT NULL,
-    booking_checkin varchar(100) NOT NULL,
-    booking_checkout varchar(100) NOT NULL,
+    booking_orderDate datetime NOT NULL,
+    booking_checkin datetime NOT NULL,
+    booking_checkout datetime NOT NULL,
     room_id varchar(120) NOT NULL,
     booking_price int NOT NULL,
     booking_amenities JSON NOT NULL,
@@ -54,6 +54,6 @@ CREATE TABLE bookings (
     booking_status varchar(120) NOT NULL,
 
     PRIMARY KEY(booking_id),
-    FOREIGN KEY(room_id) REFERENCES rooms(room_id)
+    FOREIGN KEY(room_id) REFERENCES rooms(room_id) ON DELETE CASCADE
 )
 ENGINE = InnoDB;
