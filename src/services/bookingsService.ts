@@ -5,7 +5,7 @@ import {uuid}  from 'uuidv4';
 export const getBookings = async () => {
     try{
         const allBookings = await getAllBookings();
-        return allBookings;        
+        return allBookings[0];        
     }catch(error){
         throw error;
     }
@@ -15,7 +15,7 @@ export const getBookings = async () => {
 export const getBooking = async (bookingId: string) => {
     try{
         const booking = await getOneBooking(bookingId);
-        return booking;
+        return booking[0];
     }catch(error){
         throw error;
     }
