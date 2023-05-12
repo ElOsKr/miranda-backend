@@ -25,9 +25,8 @@ export const getOneUser = async (userId: string) => {
     }
 };
 
-export const createNewUser = async(newUser: UserType) => {
+export const createNewUser = async(newUser: UserType): Promise<UserType> => {
     try{
-        userSchema.validate(newUser);
         (await connection).query(
             'INSERT INTO users SET ?',
             [newUser],
@@ -41,7 +40,7 @@ export const createNewUser = async(newUser: UserType) => {
     }
 };
 
-export const updateOneUser = async(userId: string, changes: any) => {
+export const updateOneUser = async(userId: string, changes: Omit<Partial<UserType>, "User_id">) => {
 
     try{
         (await connection).query(
@@ -53,7 +52,7 @@ export const updateOneUser = async(userId: string, changes: any) => {
     }
 };
 
-export const deleteOneUser = async(userId: string) => {
+export const deleteOneUser = async(userId: string): Promise<void> => {
     try{
         (await connection).execute(
             'DELETE FROM users where user_id=?',

@@ -6,6 +6,7 @@ import {
   updateRoom,
   deleteRoom, 
 } from '@src/services/roomsService';
+import { roomSchema } from '@src/util/validate/roomsValidate';
 import express from 'express';
 import { uuid } from 'uuidv4';
 
@@ -83,6 +84,7 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     };
 
     try{
+        await roomSchema.validateAsync(newRoom)
         const createdRoom = await createRoom(newRoom);
         res.send({status: 'OK', data: createdRoom});
     }catch(error){
@@ -104,6 +106,10 @@ export const updateOneRoom = async (req: express.Request ,res: express.Response)
     }
 
     try{
+        if(body.room_id){
+            throw new Error("Cannot update room_id")
+        }
+        await roomSchema.validateAsync(body)
         const updatedRoom = await updateRoom(roomId,body);
         res.send({status: 'OK', data: updatedRoom});        
     }catch(error){

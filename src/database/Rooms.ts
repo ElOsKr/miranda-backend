@@ -1,6 +1,5 @@
 import { RoomType } from '@src/@types/roomType';
 import { connection } from './connectionDB';
-import { roomSchema } from '../util/validate/roomsValidate';
 
 export const getAllRooms = async () => {
     try{
@@ -25,9 +24,8 @@ export const getOneRoom = async (roomId: string) => {
     }
 };
 
-export const createNewRoom = async (newRoom: RoomType) => {
+export const createNewRoom = async (newRoom: RoomType): Promise<RoomType> => {
     try{
-        roomSchema.validate(newRoom);
         (await connection).query(
             'INSERT INTO rooms SET ?',
             [newRoom]
@@ -41,7 +39,7 @@ export const createNewRoom = async (newRoom: RoomType) => {
     }
 };
 
-export const updateOneRoom = async(roomId: string, changes: any) => {
+export const updateOneRoom = async(roomId: string, changes: Omit<Partial<RoomType>, "room_id">) => {
     try{
         (await connection).query(
             'UPDATE rooms set ? where room_id=?',
@@ -52,7 +50,7 @@ export const updateOneRoom = async(roomId: string, changes: any) => {
     }
 };
 
-export const deleteOneRoom = async(roomId: string) => {
+export const deleteOneRoom = async(roomId: string): Promise<void> => {
     try{
         (await connection).execute(
             'DELETE FROM rooms where room_id=?',

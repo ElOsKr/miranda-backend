@@ -9,6 +9,7 @@ import {
 import express from 'express';
 import { uuid } from 'uuidv4';
 import bcrypt from 'bcrypt';
+import { userSchema } from '@src/util/validate/usersValidate';
 
 export const getAllUsers = async (req: express.Request ,res: express.Response) => {
     try{
@@ -88,6 +89,7 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     };
 
     try{
+        await userSchema.validateAsync(newUser)
         const createdUser = await createUser(newUser);
         res.send({status: 'OK', data: createdUser});
     }catch(error){
@@ -109,6 +111,10 @@ export const updateOneUser = async (req: express.Request ,res: express.Response)
     }
 
     try{
+        if(body.user_id){
+            throw new Error("Cannot update user_id")
+        }
+        await userSchema.validateAsync(body)
         const updatedUser = await updateUser(userId,body);
         res.send({status: 'OK', data: updatedUser});        
     }catch(error){

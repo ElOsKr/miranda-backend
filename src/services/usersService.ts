@@ -29,7 +29,7 @@ export const createUser = async (newUser: UserType) => {
     }
 };
 
-export const updateUser = async (userId: string, changes: any) => {
+export const updateUser = async (userId: string, changes: Omit<Partial<UserType>, "user_id">) => {
     try{
         const updatedUser = await updateOneUser(userId,changes);
         return updatedUser;

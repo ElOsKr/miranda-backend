@@ -28,7 +28,7 @@ export const createRoom = async (newRoom: RoomType) => {
     }
 };
 
-export const updateRoom = async (roomId: string, changes: any) => {
+export const updateRoom = async (roomId: string, changes: Omit<Partial<RoomType>, "room_id">) => {
     try{
         const updatedRoom = await updateOneRoom(roomId,changes);
         return updatedRoom;

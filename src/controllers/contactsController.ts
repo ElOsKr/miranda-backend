@@ -6,6 +6,7 @@ import {
   updateContact,
   deleteContact, 
 } from '@src/services/contactsService';
+import { contactSchema } from '@src/util/validate/contactsValidate';
 import express from 'express';
 import { uuid } from 'uuidv4';
 
@@ -77,6 +78,7 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
     };
 
     try{
+        await contactSchema.validateAsync(newContact)
         const createdContact = await createContact(newContact);
         res.send({status: 'OK', data: createdContact});
     }catch(error){
@@ -98,6 +100,10 @@ export const updateOneContact = async (req: express.Request ,res: express.Respon
     }
 
     try{
+        if(body.contact_id){
+            throw new Error("Cannot update contact_id")
+        }
+        await contactSchema.validateAsync(body)
         const updatedContact = await updateContact(contactId,body);
         res.send({status: 'OK', data: updatedContact});        
     }catch(error){

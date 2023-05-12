@@ -1,6 +1,5 @@
 import { ContactsType } from '@src/@types/contactType';
 import { connection } from './connectionDB';
-import { contactSchema } from '../util/validate/contactsValidate';
 
 export const getAllContacts = async () => {
     try{
@@ -25,9 +24,8 @@ export const getOneContact = async (contactId: string) => {
     }
 };
 
-export const createNewContact = async (newContact: ContactsType) => {
+export const createNewContact = async (newContact: ContactsType): Promise<ContactsType> => {
     try{
-        contactSchema.validate(newContact);
         (await connection).query(
             'INSERT INTO contacts SET ?',
             [newContact],
@@ -41,7 +39,7 @@ export const createNewContact = async (newContact: ContactsType) => {
     }
 };
 
-export const updateOneContact = async (contactId: string, changes: any) => {
+export const updateOneContact = async (contactId: string, changes: Omit<Partial<ContactsType>, "contact_id">) => {
     try{
         (await connection).query(
             'UPDATE contact set ? where contact_id=?',
@@ -52,7 +50,7 @@ export const updateOneContact = async (contactId: string, changes: any) => {
     }
 };
 
-export const deleteOneContact = async (contactId: string) => {
+export const deleteOneContact = async (contactId: string): Promise<void> => {
     try{
         (await connection).execute(
             'DELETE FROM contacts where contact_id=?',

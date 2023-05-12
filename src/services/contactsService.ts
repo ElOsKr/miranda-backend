@@ -29,7 +29,7 @@ export const createContact = async (newContact: ContactsType) => {
     }
 };
 
-export const updateContact = async (contactId: string, changes: any) => {
+export const updateContact = async (contactId: string, changes: Omit<Partial<ContactsType>, "contact_id">) => {
     try{
         const updatedContact = await updateOneContact(contactId,changes);
         return updatedContact;
