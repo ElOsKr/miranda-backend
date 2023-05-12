@@ -29,7 +29,7 @@ export const createBooking = async (newBooking: BookingsType) => {
     }
 };
 
-export const updateBooking = async (bookingId: string, changes: any) => {
+export const updateBooking = async (bookingId: string, changes: Omit<Partial<BookingsType>, "booking_id">) => {
     try{
         const updatedBooking = await updateOneBooking(bookingId,changes);
         return updatedBooking;

@@ -8,6 +8,7 @@ import {
 } from '@src/services/bookingsService';
 import express from 'express';
 import { uuid } from 'uuidv4';
+import { bookingSchema } from '../util/validate/bookingsValidate';
 
 export const getAllBookings = async (req: express.Request ,res: express.Response) => {
     try{
@@ -91,6 +92,7 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     };
 
     try{
+        await bookingSchema.validateAsync(newBooking);
         const createdBooking = await createBooking(newBooking);
         res.send({status: 'OK', data: createdBooking});
     }catch(error){
@@ -112,6 +114,10 @@ export const updateOneBooking = async (req: express.Request ,res: express.Respon
     }
 
     try{
+        if(body.booking_id){
+            throw new Error("Cannot update booking_id")
+        }
+        await bookingSchema.validateAsync(body)
         const updatedBooking = await updateBooking(bookingId,body);
         res.send({status: 'OK', data: updatedBooking});        
     }catch(error){

@@ -1,6 +1,5 @@
 import { BookingsType } from '@src/@types/bookingsType';
 import { connection } from './connectionDB';
-import { bookingSchema } from '../util/validate/bookingsValidate';
 
 export const getAllBookings = async () => {
     try{
@@ -19,7 +18,6 @@ export const getAllBookings = async () => {
 };
 
 export const getOneBooking = async (bookingId: string) => {
-
     try{
         const booking = (await connection).execute(
             'SELECT * FROM bookings where booking_id = ?',
@@ -31,9 +29,8 @@ export const getOneBooking = async (bookingId: string) => {
     }
 };
 
-export const createNewBooking = async (newBooking: BookingsType) => {
+export const createNewBooking = async (newBooking: BookingsType): Promise<BookingsType> => {
     try{
-        bookingSchema.validate(newBooking);
         (await connection).query(
             'INSERT INTO bookings SET ?',
             [newBooking],
@@ -47,8 +44,7 @@ export const createNewBooking = async (newBooking: BookingsType) => {
     }
 };
 
-export const updateOneBooking = async (bookingId: string, changes: any) => {
-
+export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<BookingsType>, "booking_id">): Promise<void> => {
     try{
         (await connection).query(
             'UPDATE bookings set ? where booking_id=?',
@@ -59,8 +55,7 @@ export const updateOneBooking = async (bookingId: string, changes: any) => {
     }
 };
 
-export const deleteOneBooking = async (bookingId: string) => {
-
+export const deleteOneBooking = async (bookingId: string): Promise<void> => {
     try{
         (await connection).execute(
             'DELETE FROM bookings where booking_id=?',
