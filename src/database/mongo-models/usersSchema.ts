@@ -12,3 +12,5 @@ export const userSchema = new Schema<UserType>({
     description: String,
     status: Boolean
 })
+
+export const userModel = mongoose.model('Users', userSchema)

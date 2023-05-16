@@ -1,10 +1,10 @@
 import { ContactsType } from '@src/@types/contactType';
-import { createNewContact, deleteOneContact, getAllContacts, getOneContact, updateOneContact } from '@src/database/mysql/Contact';
+import { createNewContact, deleteOneContact, getAllContacts, getOneContact, updateOneContact } from '@src/database/mongo/Contact';
 
 export const getContacts = async () => {
     try{
         const allContacts = await getAllContacts();
-        return allContacts[0];        
+        return allContacts;        
     }catch(error){
         throw error;
     }
@@ -14,7 +14,7 @@ export const getContacts = async () => {
 export const getContact = async (contactId: string) => {
     try{
         const contact = await getOneContact(contactId);
-        return contact[0];
+        return contact;
     }catch(error){
         throw error;
     }

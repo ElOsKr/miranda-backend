@@ -2,7 +2,7 @@ import mongoose from "mongoose";
 const { Schema } = mongoose;
 import { RoomType } from '@src/@types/roomType'
 
-export const roomSchema = new Schema<RoomType>({
+const roomSchema = new Schema<RoomType>({
     id: {type: String, unique: true},
     number: Number,
     photo: String,
@@ -12,3 +12,5 @@ export const roomSchema = new Schema<RoomType>({
     offer: Number,
     status: Boolean
 })
+
+export const roomModel = mongoose.model('Rooms', roomSchema)

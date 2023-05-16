@@ -7,7 +7,7 @@ export interface BookingsType {
   checkout: Date,
   room_Id: string,
   price: number,
-  amenities: string,
+  amenities: string[],
   specialRequest?: string
   description: string,
   status: string

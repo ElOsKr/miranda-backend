@@ -1,6 +1,10 @@
 export interface ContactsType {
     id: string,
-    customer: string,
+    customer: {
+        name: string,
+        email: string,
+        phone: number
+    },
     subject: string,
     comment: string,
     status?: boolean

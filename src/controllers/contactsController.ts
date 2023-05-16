@@ -71,7 +71,7 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
 
     const newContact: ContactsType = {
         id: uuid(),
-        customer: JSON.stringify(body.customer),
+        customer: body.customer,
         subject: body.subject,
         comment: body.comment,
         status: body.status,

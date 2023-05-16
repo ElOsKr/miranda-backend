@@ -11,21 +11,6 @@ import userRouter from './routes/users';
 import contactRouter from './routes/contacts';
 import roomRouter from './routes/rooms';
 
-async function connection() {
-  try{
-    await mongoose.connect('mongodb://127.0.0.1:27017/test', {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-    } as mongoose.ConnectOptions);
-
-    console.log('Connected');
-  } catch (error){
-    console.log(`Mongo connection error: ${error}`);
-  }
-}
-
-connection();
-
 const app = express();
 
 const PORT = 3000;

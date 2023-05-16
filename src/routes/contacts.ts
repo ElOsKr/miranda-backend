@@ -11,12 +11,12 @@ const contactRouter = express.Router();
   
 contactRouter.get('/',getAllContacts);
   
-contactRouter.get('/:ContactId',getOneContact);
+contactRouter.get('/:contactId',getOneContact);
   
 contactRouter.post('/', createOneContact);
   
-contactRouter.patch('/:ContactId', updateOneContact);
+contactRouter.patch('/:contactId', updateOneContact);
   
-contactRouter.delete('/:ContactId',deleteOneContact);
+contactRouter.delete('/:contactId',deleteOneContact);
   
 export default contactRouter;

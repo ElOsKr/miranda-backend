@@ -3,7 +3,7 @@ export interface RoomType {
     number: number,
     id: string,
     type: string,
-    amenities?: string,
+    amenities?: string[],
     price: number,
     offer?: number,
     status: boolean
