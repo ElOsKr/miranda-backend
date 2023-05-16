@@ -45,11 +45,11 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     const { body } = req;
 
     if(
-        !body.room_photo||
-        !body.room_number||
-        !body.room_price||
-        !body.room_type||
-        (!body.room_status && typeof body.room_status !== "boolean")
+        !body.photo||
+        !body.number||
+        !body.price||
+        !body.type||
+        (!body.status && typeof body.status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -72,14 +72,14 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     }
 
     const newRoom: RoomType = {
-        room_id: uuid(),
-        room_photo: body.room_photo,
-        room_number: body.room_number,
-        room_type: body.room_type,
-        room_price: body.room_price,
-        room_amenities: body.room_amenities,
-        room_status: (body.room_status),
-        room_offer: body.room_offer,
+        id: uuid(),
+        photo: body.photo,
+        number: body.number,
+        type: body.type,
+        price: body.price,
+        amenities: body.amenities,
+        status: (body.status),
+        offer: body.offer,
 
     };
 
@@ -106,8 +106,8 @@ export const updateOneRoom = async (req: express.Request ,res: express.Response)
     }
 
     try{
-        if(body.room_id){
-            throw new Error("Cannot update room_id")
+        if(body.id){
+            throw new Error("Cannot update id")
         }
         await roomSchema.validateAsync(body)
         const updatedRoom = await updateRoom(roomId,body);

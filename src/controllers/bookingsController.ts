@@ -45,16 +45,16 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     const { body } = req;
 
     if(
-        !body.booking_photo||
-        !body.booking_guest||
-        !body.booking_orderDate||
-        !body.booking_checkin||
-        !body.booking_checkout||
+        !body.photo||
+        !body.guest||
+        !body.orderDate||
+        !body.checkin||
+        !body.checkout||
         !body.room_id||
-        !body.booking_price||
-        !body.booking_amenities||
-        !body.booking_description||
-        (!body.booking_status && typeof body.booking_status !== "boolean")
+        !body.price||
+        !body.amenities||
+        !body.description||
+        (!body.status && typeof body.status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -66,7 +66,7 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     }
     
     for ( const key in body ){
-        if(!body[key] && body.booking_status !==false){
+        if(!body[key] && body.status !==false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -77,18 +77,18 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     }
 
     const newBooking: BookingsType = {
-        booking_photo: body.booking_photo,
-        booking_id: uuid(),
-        booking_guest: body.booking_guest,
-        booking_orderDate: body.booking_orderDate,
-        booking_checkin: body.booking_checkin,
-        booking_checkout:body.booking_checkout,
+        photo: body.photo,
+        id: uuid(),
+        guest: body.guest,
+        orderDate: body.orderDate,
+        checkin: body.checkin,
+        checkout:body.checkout,
         room_Id: body.room_id,
-        booking_price: body.booking_price,
-        booking_amenities: body.booking_amenities,
-        booking_description: body.booking_description,
-        booking_specialRequest: body.booking_specialRequest,
-        booking_status: body.booking_status,
+        price: body.price,
+        amenities: body.amenities,
+        description: body.description,
+        specialRequest: body.specialRequest,
+        status: body.status,
     };
 
     try{
@@ -114,8 +114,8 @@ export const updateOneBooking = async (req: express.Request ,res: express.Respon
     }
 
     try{
-        if(body.booking_id){
-            throw new Error("Cannot update booking_id")
+        if(body.id){
+            throw new Error("Cannot update id")
         }
         await bookingSchema.validateAsync(body)
         const updatedBooking = await updateBooking(bookingId,body);

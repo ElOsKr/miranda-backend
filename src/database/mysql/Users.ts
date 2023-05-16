@@ -1,6 +1,5 @@
 import { UserType } from '@src/@types/userType';
 import { connection } from './connectionDB';
-import { userSchema } from '../util/validate/usersValidate';
 
 export const getAllUsers = async() => {
     try{
@@ -16,7 +15,7 @@ export const getAllUsers = async() => {
 export const getOneUser = async (userId: string) => {
     try{
         const user = (await connection).execute(
-            'SELECT * FROM users where user_id = ?',
+            'SELECT * FROM users where id = ?',
             [userId],
         );
         return user;
@@ -40,11 +39,11 @@ export const createNewUser = async(newUser: UserType): Promise<UserType> => {
     }
 };
 
-export const updateOneUser = async(userId: string, changes: Omit<Partial<UserType>, "User_id">) => {
+export const updateOneUser = async(userId: string, changes: Omit<Partial<UserType>, "id">) => {
 
     try{
         (await connection).query(
-            'UPDATE users set ? where user_id=?',
+            'UPDATE users set ? where id=?',
             [changes,userId],
         );
     }catch(error){
@@ -55,7 +54,7 @@ export const updateOneUser = async(userId: string, changes: Omit<Partial<UserTyp
 export const deleteOneUser = async(userId: string): Promise<void> => {
     try{
         (await connection).execute(
-            'DELETE FROM users where user_id=?',
+            'DELETE FROM users where id=?',
             [userId],
         );       
     }catch(error){

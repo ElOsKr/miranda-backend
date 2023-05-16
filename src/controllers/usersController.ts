@@ -46,13 +46,13 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     const { body } = req;
 
     if(
-        !body.user_name||
-        !body.user_password||
-        !body.user_photo||
-        !body.user_email||
-        !body.user_description||
-        !body.user_contact||
-        (!body.user_status && typeof body.user_status !== "boolean")
+        !body.name||
+        !body.password||
+        !body.photo||
+        !body.email||
+        !body.description||
+        !body.contact||
+        (!body.status && typeof body.status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -63,7 +63,7 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     }
     
     for ( const key in body ){
-        if(!body[key] && body.user_status !== false){
+        if(!body[key] && body.status !== false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -74,18 +74,18 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     }
 
     const salt = await bcrypt.genSalt(10);
-    const password = await bcrypt.hash(body.user_password,salt);
+    const password = await bcrypt.hash(body.password,salt);
     console.log(password)
 
     const newUser: UserType = {
-        user_id: uuid(),
-        user_name: body.user_name,
-        user_password: password,
-        user_photo: body.user_photo,
-        user_email: body.user_email,
-        user_description: body.user_description,
-        user_contact: body.user_contact,
-        user_status: body.user_status,
+        id: uuid(),
+        name: body.user_name,
+        password: password,
+        photo: body.user_photo,
+        email: body.user_email,
+        description: body.user_description,
+        contact: body.user_contact,
+        status: body.user_status,
     };
 
     try{

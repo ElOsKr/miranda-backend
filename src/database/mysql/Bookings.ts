@@ -4,11 +4,11 @@ import { connection } from './connectionDB';
 export const getAllBookings = async () => {
     try{
         const bookings = (await connection).execute(
-            `SELECT b.*, r.room_type 
+            `SELECT b.*, r.type 
              FROM bookings b
              JOIN
              rooms r
-             ON b.room_id = r.room_id
+             ON b.room_id = r.id
             `,
         );
         return bookings;
@@ -20,7 +20,7 @@ export const getAllBookings = async () => {
 export const getOneBooking = async (bookingId: string) => {
     try{
         const booking = (await connection).execute(
-            'SELECT * FROM bookings where booking_id = ?',
+            'SELECT * FROM bookings where id = ?',
             [bookingId],
         );
         return booking;
@@ -44,10 +44,10 @@ export const createNewBooking = async (newBooking: BookingsType): Promise<Bookin
     }
 };
 
-export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<BookingsType>, "booking_id">): Promise<void> => {
+export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<BookingsType>, "id">): Promise<void> => {
     try{
         (await connection).query(
-            'UPDATE bookings set ? where booking_id=?',
+            'UPDATE bookings set ? where id=?',
             [changes,bookingId],
         );
     }catch(error){
@@ -58,7 +58,7 @@ export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<
 export const deleteOneBooking = async (bookingId: string): Promise<void> => {
     try{
         (await connection).execute(
-            'DELETE FROM bookings where booking_id=?',
+            'DELETE FROM bookings where id=?',
             [bookingId],
         );       
     }catch(error){

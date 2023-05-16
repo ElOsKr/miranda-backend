@@ -1,5 +1,5 @@
 import { BookingsType } from '@src/@types/bookingsType';
-import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/Bookings';
+import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/mysql/Bookings';
 
 export const getBookings = async () => {
     try{

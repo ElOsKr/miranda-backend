@@ -1,9 +1,3 @@
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable no-console */
-/* eslint-disable @typescript-eslint/no-unused-vars */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/restrict-template-expressions */
-/* eslint-disable max-len */
 import express from 'express';
 import bookingRouter from '@src/routes/bookings';
 import bodyParser from 'body-parser';
@@ -17,20 +11,20 @@ import userRouter from './routes/users';
 import contactRouter from './routes/contacts';
 import roomRouter from './routes/rooms';
 
-// async function connection() {
-//   try{
-//     await mongoose.connect('mongodb://127.0.0.1:27017/passport-jwt', {
-//       useNewUrlParser: true,
-//       useUnifiedTopology: true,
-//     } as mongoose.ConnectOptions);
+async function connection() {
+  try{
+    await mongoose.connect('mongodb://127.0.0.1:27017/test', {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+    } as mongoose.ConnectOptions);
 
-//     console.log('Connected');
-//   } catch (error){
-//     console.log(`Mongo connection error: ${error}`);
-//   }
-// }
+    console.log('Connected');
+  } catch (error){
+    console.log(`Mongo connection error: ${error}`);
+  }
+}
 
-// connection();
+connection();
 
 const app = express();
 

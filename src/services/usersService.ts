@@ -1,5 +1,5 @@
 import { UserType } from '@src/@types/userType';
-import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/Users';
+import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/mysql/Users';
 
 export const getUsers = async () => {
     try{

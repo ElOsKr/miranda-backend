@@ -45,10 +45,10 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
     const { body } = req;
 
     if(
-        !body.contact_customer||
-        !body.contact_subject||
-        !body.contact_comment||
-        (!body.contact_status && typeof body.contact_status !== "boolean")
+        !body.customer||
+        !body.subject||
+        !body.comment||
+        (!body.status && typeof body.status !== "boolean")
     ){
         res.status(400).send({
             status: 'Failed',
@@ -59,7 +59,7 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
     }
     
     for ( const key in body ){
-        if(!body[key] && body.contact_status!==false){
+        if(!body[key] && body.status!==false){
             res.status(400).send({
                 status: 'Failed',
                 data: {
@@ -70,11 +70,11 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
     }
 
     const newContact: ContactsType = {
-        contact_id: uuid(),
-        contact_customer: JSON.stringify(body.contact_customer),
-        contact_subject: body.contact_subject,
-        contact_comment: body.contact_comment,
-        contact_status: body.contact_status,
+        id: uuid(),
+        customer: JSON.stringify(body.customer),
+        subject: body.subject,
+        comment: body.comment,
+        status: body.status,
     };
 
     try{
@@ -100,8 +100,8 @@ export const updateOneContact = async (req: express.Request ,res: express.Respon
     }
 
     try{
-        if(body.contact_id){
-            throw new Error("Cannot update contact_id")
+        if(body.id){
+            throw new Error("Cannot update id")
         }
         await contactSchema.validateAsync(body)
         const updatedContact = await updateContact(contactId,body);

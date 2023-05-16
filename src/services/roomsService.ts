@@ -1,5 +1,5 @@
 import { RoomType } from '@src/@types/roomType';
-import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/Rooms';
+import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/mysql/Rooms';
 
 export const getRooms = async() => {
     try{

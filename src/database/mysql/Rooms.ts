@@ -15,7 +15,7 @@ export const getAllRooms = async () => {
 export const getOneRoom = async (roomId: string) => {
     try{
         const room = (await connection).execute(
-            'SELECT * FROM rooms where room_id = ?',
+            'SELECT * FROM rooms where id = ?',
             [roomId],
         );
         return room;
@@ -39,10 +39,10 @@ export const createNewRoom = async (newRoom: RoomType): Promise<RoomType> => {
     }
 };
 
-export const updateOneRoom = async(roomId: string, changes: Omit<Partial<RoomType>, "room_id">) => {
+export const updateOneRoom = async(roomId: string, changes: Omit<Partial<RoomType>, "id">) => {
     try{
         (await connection).query(
-            'UPDATE rooms set ? where room_id=?',
+            'UPDATE rooms set ? where id=?',
             [changes,roomId],
         );
     }catch(error){
@@ -53,7 +53,7 @@ export const updateOneRoom = async(roomId: string, changes: Omit<Partial<RoomTyp
 export const deleteOneRoom = async(roomId: string): Promise<void> => {
     try{
         (await connection).execute(
-            'DELETE FROM rooms where room_id=?',
+            'DELETE FROM rooms where id=?',
             [roomId],
         );
     }catch(error){

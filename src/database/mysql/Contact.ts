@@ -15,7 +15,7 @@ export const getAllContacts = async () => {
 export const getOneContact = async (contactId: string) => {
     try{
         const contact = (await connection).execute(
-            'SELECT * FROM contacts where contact_id = ?',
+            'SELECT * FROM contacts where id = ?',
             [contactId],
         );
         return contact;
@@ -39,10 +39,10 @@ export const createNewContact = async (newContact: ContactsType): Promise<Contac
     }
 };
 
-export const updateOneContact = async (contactId: string, changes: Omit<Partial<ContactsType>, "contact_id">) => {
+export const updateOneContact = async (contactId: string, changes: Omit<Partial<ContactsType>, "id">) => {
     try{
         (await connection).query(
-            'UPDATE contact set ? where contact_id=?',
+            'UPDATE contact set ? where id=?',
             [changes,contactId],
         );
     }catch(error){
@@ -53,7 +53,7 @@ export const updateOneContact = async (contactId: string, changes: Omit<Partial<
 export const deleteOneContact = async (contactId: string): Promise<void> => {
     try{
         (await connection).execute(
-            'DELETE FROM contacts where contact_id=?',
+            'DELETE FROM contacts where id=?',
             [contactId],
         );
     }catch(error){
