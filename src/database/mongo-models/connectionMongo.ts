@@ -1,8 +1,11 @@
 import mongoose from "mongoose";
+import 'dotenv/config';
+const uri = `mongodb+srv://${process.env.MONGO_USER}:${process.env.MONGO_KEY}@cluster0.xqmwsv7.mongodb.net/?retryWrites=true&w=majority`
+
 
 export const connect = async (): Promise<void> => {
     try{
-        await mongoose.connect('mongodb://127.0.0.1:27017/mirandahotel');
+        await mongoose.connect(uri);
     
         console.log('Connected');
       } catch (error){
