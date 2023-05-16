@@ -1,35 +1,36 @@
-import { ContactsType } from '@src/@types/contactType';
+import { BookingsType } from '@src/@types/bookingsType';
 import { connect, disconnect } from '../mongo-models/connectionMongo';
+import { bookingModel } from '../mongo-models/bookingSchema';
 import { contactModel } from '../mongo-models/contactSchema';
 
-export const getAllContacts = async () => {
+export const getAllBookings = async () => {
     try{
         await connect();
-        const contacts = await contactModel.find();
+        const bookings = await bookingModel.find();
         await disconnect();
-        return contacts;
+        return bookings;
     }catch(error){
         throw { status: 500, message: error};
     }
 };
 
-export const getOneContact = async (contactId: string) => {
+export const getOneBooking = async (bookingId: string) => {
     try{
         await connect();
-        const contact = await contactModel.find({id: contactId})
-        await disconnect()
-        return contact;
+        const booking = await bookingModel.find({id: bookingId})
+        await disconnect();
+        return booking;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const createNewContact = async (newContact: ContactsType): Promise<ContactsType> => {
+export const createNewBooking = async (newBooking: BookingsType): Promise<BookingsType> => {
     try{
         await connect();
-        await contactModel.create(newContact)
+        await contactModel.create(newBooking);
         await disconnect();
-        return newContact;
+        return newBooking;
     }catch (error){
         throw {
             status: 500,
@@ -38,21 +39,20 @@ export const createNewContact = async (newContact: ContactsType): Promise<Contac
     }
 };
 
-export const updateOneContact = async (contactId: string, changes: Omit<Partial<ContactsType>, "id">) => {
+export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<BookingsType>, "id">): Promise<void> => {
     try{
         await connect();
-        await contactModel.findOneAndUpdate({id: contactId}, changes);
+        await bookingModel.findOneAndUpdate({id: bookingId}, changes);
         await disconnect();
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
 };
 
-export const deleteOneContact = async (contactId: string): Promise<void> => {
+export const deleteOneBooking = async (bookingId: string): Promise<void> => {
     try{
         await connect();
-        await contactModel.findOneAndDelete({id: contactId});
-        await disconnect()
+        await bookingModel.findOneAndDelete({id: bookingId})
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }

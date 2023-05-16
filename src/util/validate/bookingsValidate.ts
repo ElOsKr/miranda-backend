@@ -10,7 +10,7 @@ export const bookingSchema = joi.object<BookingsType>({
     checkout: joi.date(),
     room_Id: joi.string().guid({version: 'uuidv4'}),
     price: joi.number().min(0),
-    amenities: joi.string(),
+    amenities: joi.array().items(joi.string()),
     specialRequest: joi.string(),
     description: joi.string(),
     status: joi.string().valid("checkIn","checkOut","inProgress")

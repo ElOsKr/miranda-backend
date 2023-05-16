@@ -1,10 +1,10 @@
 import { UserType } from '@src/@types/userType';
-import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/mysql/Users';
+import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/mongo/Users';
 
 export const getUsers = async () => {
     try{
         const allUsers = await getAllUsers();
-        return allUsers[0];        
+        return allUsers;        
     }catch(error){
         throw error;
     }
@@ -14,7 +14,7 @@ export const getUsers = async () => {
 export const getUser = async (UserId: string) => {
     try{
         const user = await getOneUser(UserId);
-        return user[0];
+        return user;
     }catch(error){
         throw error;
     }

@@ -1,10 +1,10 @@
 import { BookingsType } from '@src/@types/bookingsType';
-import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/mysql/Bookings';
+import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '@src/database/mongo/Bookings';
 
 export const getBookings = async () => {
     try{
         const allBookings = await getAllBookings();
-        return allBookings[0];        
+        return allBookings;        
     }catch(error){
         throw error;
     }
@@ -14,7 +14,7 @@ export const getBookings = async () => {
 export const getBooking = async (bookingId: string) => {
     try{
         const booking = await getOneBooking(bookingId);
-        return booking[0];
+        return booking;
     }catch(error){
         throw error;
     }

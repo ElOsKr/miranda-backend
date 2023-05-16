@@ -1,10 +1,10 @@
 import { RoomType } from '@src/@types/roomType';
-import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/mysql/Rooms';
+import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/mongo/Rooms';
 
 export const getRooms = async() => {
     try{
         const allRooms = await getAllRooms();
-        return allRooms[0];        
+        return allRooms;        
     }catch(error){
         throw error;
     }
@@ -13,7 +13,7 @@ export const getRooms = async() => {
 export const getRoom = async (roomId: string) => {
     try{
         const room = await getOneRoom(roomId);
-        return room[0];
+        return room;
     }catch(error){
         throw error;
     }

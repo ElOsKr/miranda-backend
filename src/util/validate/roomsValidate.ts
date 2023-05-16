@@ -6,7 +6,7 @@ export const roomSchema = joi.object<RoomType>({
     number: joi.number().min(0),
     photo: joi.string().uri(),
     type: joi.string().valid("double bed","single","duplex"),
-    amenities: joi.string(),
+    amenities: joi.array().items(joi.string()),
     price: joi.number(),
     offer: joi.number().min(0).max(99),
     status: joi.boolean()
