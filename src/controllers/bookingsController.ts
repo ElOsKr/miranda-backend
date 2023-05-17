@@ -1,11 +1,11 @@
-import { BookingsType } from '@src/@types/bookingsType';
+import { BookingsType } from '../../src/@types/bookingsType';
 import { 
   getBookings,
   getBooking,
   createBooking,
   updateBooking,
   deleteBooking, 
-} from '@src/services/bookingsService';
+} from '../services/bookingsService';
 import express from 'express';
 import { uuid } from 'uuidv4';
 import { bookingSchema } from '../util/validate/bookingsValidate';

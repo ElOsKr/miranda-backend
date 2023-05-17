@@ -1,5 +1,5 @@
-import { UserType } from '@src/@types/userType';
-import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '@src/database/mongo/Users';
+import { UserType } from '../@types/userType';
+import { createNewUser, deleteOneUser, getAllUsers, getOneUser, updateOneUser } from '../database/mongo/Users';
 
 export const getUsers = async () => {
     try{

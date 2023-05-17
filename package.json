@@ -7,7 +7,7 @@
     "lint:tests": "npx eslint --ext .ts spec/",
     "start": "node -r module-alias/register ./dist --env=production",
     "dev": "nodemon",
-    "test": "nodemon --config ./spec/nodemon.json",
+    "test": "jest",
     "test:no-reloading": "npx ts-node --files -r tsconfig-paths/register ./spec"
   },
   "nodemonConfig": {
@@ -55,6 +55,7 @@
     "uuidv4": "^6.2.13"
   },
   "devDependencies": {
+    "@babel/preset-typescript": "^7.21.5",
     "@faker-js/faker": "^7.6.0",
     "@types/bcrypt": "^5.0.0",
     "@types/cookie-parser": "^1.4.3",
@@ -62,6 +63,7 @@
     "@types/find": "^0.2.1",
     "@types/fs-extra": "^11.0.1",
     "@types/jasmine": "^4.3.1",
+    "@types/jest": "^29.5.1",
     "@types/joi": "^17.2.3",
     "@types/jsonfile": "^6.1.1",
     "@types/jsonwebtoken": "^9.0.2",
@@ -74,13 +76,17 @@
     "@types/supertest": "^2.0.12",
     "@typescript-eslint/eslint-plugin": "^5.59.2",
     "@typescript-eslint/parser": "^5.59.2",
+    "babel-cli": "^6.26.0",
+    "babel-preset-env": "^1.7.0",
     "eslint": "^8.39.0",
     "eslint-plugin-node": "^11.1.0",
     "find": "^0.3.0",
     "fs-extra": "^11.1.1",
     "jasmine": "^4.6.0",
     "nodemon": "^2.0.22",
+    "superagent": "^8.0.9",
     "supertest": "^6.3.3",
+    "ts-jest": "^29.1.0",
     "ts-node": "^10.9.1",
     "tsconfig-paths": "^4.2.0",
     "typescript": "^5.0.4"

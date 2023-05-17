@@ -1,12 +1,12 @@
-import { ContactsType } from '@src/@types/contactType';
+import { ContactsType } from '../@types/contactType';
 import { 
   getContacts,
   getContact,
   createContact,
   updateContact,
   deleteContact, 
-} from '@src/services/contactsService';
-import { contactSchema } from '@src/util/validate/contactsValidate';
+} from '../services/contactsService';
+import { contactSchema } from '../util/validate/contactsValidate';
 import express from 'express';
 import { uuid } from 'uuidv4';
 

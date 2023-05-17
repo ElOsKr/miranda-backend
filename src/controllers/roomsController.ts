@@ -1,12 +1,12 @@
-import { RoomType } from '@src/@types/roomType';
+import { RoomType } from '../@types/roomType';
 import { 
   getRooms,
   getRoom,
   createRoom,
   updateRoom,
   deleteRoom, 
-} from '@src/services/roomsService';
-import { roomSchema } from '@src/util/validate/roomsValidate';
+} from '../services/roomsService';
+import { roomSchema } from '../util/validate/roomsValidate';
 import express from 'express';
 import { uuid } from 'uuidv4';
 

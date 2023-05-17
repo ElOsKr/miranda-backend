@@ -4,7 +4,7 @@ import {
   getAllBookings, 
   getOneBooking,
   updateOneBooking, 
-} from '@src/controllers/bookingsController';
+} from '../controllers/bookingsController';
 import express from 'express';
 
 const bookingRouter = express.Router();

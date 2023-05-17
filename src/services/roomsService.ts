@@ -1,5 +1,5 @@
-import { RoomType } from '@src/@types/roomType';
-import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '@src/database/mongo/Rooms';
+import { RoomType } from '../@types/roomType';
+import { createNewRoom, deleteOneRoom, getAllRooms, getOneRoom, updateOneRoom } from '../database/mongo/Rooms';
 
 export const getRooms = async() => {
     try{

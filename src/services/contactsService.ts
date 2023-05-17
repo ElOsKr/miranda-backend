@@ -1,5 +1,5 @@
-import { ContactsType } from '@src/@types/contactType';
-import { createNewContact, deleteOneContact, getAllContacts, getOneContact, updateOneContact } from '@src/database/mongo/Contact';
+import { ContactsType } from '../@types/contactType';
+import { createNewContact, deleteOneContact, getAllContacts, getOneContact, updateOneContact } from '../database/mongo/Contact';
 
 export const getContacts = async () => {
     try{

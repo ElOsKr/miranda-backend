@@ -4,7 +4,7 @@ import {
   getAllRooms, 
   getOneRoom,
   updateOneRoom, 
-} from '@src/controllers/roomsController';
+} from '../controllers/roomsController';
 import express from 'express';
   
 const roomRouter = express.Router();

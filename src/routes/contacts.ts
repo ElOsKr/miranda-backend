@@ -4,7 +4,7 @@ import {
   getAllContacts, 
   getOneContact,
   updateOneContact, 
-} from '@src/controllers/contactsController';
+} from '../controllers/contactsController';
 import express from 'express';
   
 const contactRouter = express.Router();

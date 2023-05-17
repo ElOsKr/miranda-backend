@@ -1,4 +1,4 @@
-import { BookingsType } from '@src/@types/bookingsType';
+import { BookingsType } from '../../@types/bookingsType';
 import { connect, disconnect } from '../mongo-models/connectionMongo';
 import { bookingModel } from '../mongo-models/bookingSchema';
 import { contactModel } from '../mongo-models/contactSchema';

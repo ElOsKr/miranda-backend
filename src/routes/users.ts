@@ -4,7 +4,7 @@ import {
   getAllUsers, 
   getOneUser,
   updateOneUser, 
-} from '@src/controllers/usersController';
+} from '../controllers/usersController';
 import express from 'express';
   
 const userRouter = express.Router();

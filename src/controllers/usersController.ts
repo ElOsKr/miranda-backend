@@ -1,15 +1,15 @@
-import { UserType } from '@src/@types/userType';
+import { UserType } from '../@types/userType';
 import { 
   getUsers,
   getUser,
   createUser,
   updateUser,
   deleteUser, 
-} from '@src/services/usersService';
+} from '../services/usersService';
 import express from 'express';
 import { uuid } from 'uuidv4';
 import bcrypt from 'bcrypt';
-import { userSchema } from '@src/util/validate/usersValidate';
+import { userSchema } from '../util/validate/usersValidate';
 
 export const getAllUsers = async (req: express.Request ,res: express.Response) => {
     try{
