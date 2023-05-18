@@ -1,7 +1,6 @@
 import { BookingsType } from '../../@types/bookingsType';
 import { connect, disconnect } from '../mongo-models/connectionMongo';
 import { bookingModel } from '../mongo-models/bookingSchema';
-import { contactModel } from '../mongo-models/contactSchema';
 
 export const getAllBookings = async () => {
     try{
@@ -28,7 +27,7 @@ export const getOneBooking = async (bookingId: string) => {
 export const createNewBooking = async (newBooking: BookingsType): Promise<BookingsType> => {
     try{
         await connect();
-        await contactModel.create(newBooking);
+        await bookingModel.create(newBooking);
         await disconnect();
         return newBooking;
     }catch (error){

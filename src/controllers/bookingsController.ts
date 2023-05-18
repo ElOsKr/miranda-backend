@@ -50,7 +50,7 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
         !body.orderDate||
         !body.checkin||
         !body.checkout||
-        !body.room_id||
+        !body.room_Id||
         !body.price||
         !body.amenities||
         !body.description||
@@ -83,7 +83,7 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
         orderDate: body.orderDate,
         checkin: body.checkin,
         checkout:body.checkout,
-        room_Id: body.room_id,
+        room_Id: body.room_Id,
         price: body.price,
         amenities: body.amenities,
         description: body.description,
