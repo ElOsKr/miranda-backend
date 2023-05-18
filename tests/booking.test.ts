@@ -1,7 +1,6 @@
 import server from '../src/server';
 import { agent } from 'supertest';
 import 'dotenv'
-import { BookingsType } from '../src/@types/bookingsType';
 
 const bookingCreate = {
     photo: "https://www.riazorhotel.com/wp-content/blogs.dir/1623/files/home/HOME_SLIDER_1-1.jpg",
@@ -87,7 +86,7 @@ describe("Bookings test", ()=>{
         expect(bookingEdited).toEqual({...bookingCreate, id: id, guest: "yo"});
     })
 
-    it("Update one booking", async () => {
+    it("Delete one booking", async () => {
         const response = await request.delete(`/bookings/${id}`)
         .set("Authorization",`bearer ${token}`)
 
