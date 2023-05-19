@@ -14,9 +14,9 @@ import { userSchema } from '../util/validate/usersValidate';
 export const getAllUsers = async (req: express.Request ,res: express.Response) => {
     try{
         const allUsers = await getUsers();
-        res.send({status: 'OK', data: allUsers});
+        return res.json({status: 'OK', data: allUsers});
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
@@ -25,7 +25,7 @@ export const getOneUser = async (req: express.Request ,res: express.Response) =>
         params: {userId},
     } = req;
     if(!userId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'UserId can not be empty'},
         });
@@ -33,9 +33,9 @@ export const getOneUser = async (req: express.Request ,res: express.Response) =>
 
     try{
         const user = await getUser(userId);
-        res.send({status: 'OK', data: user});       
+        return res.json({status: 'OK', data: user});       
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 
@@ -54,7 +54,7 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
         !body.contact||
         (!body.status && typeof body.status !== "boolean")
     ){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'Failed',
             data: {
                 error: 'Cannot create object',
@@ -64,7 +64,7 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     
     for ( const key in body ){
         if(!body[key] && body.status !== false){
-            res.status(400).send({
+            res.status(400).json({
                 status: 'Failed',
                 data: {
                     error: 'missing params',
@@ -91,9 +91,9 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
     try{
         await userSchema.validateAsync(newUser)
         const createdUser = await createUser(newUser);
-        res.send({status: 'OK', data: createdUser});
+        return res.json({status: 'OK', data: createdUser});
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
@@ -104,7 +104,7 @@ export const updateOneUser = async (req: express.Request ,res: express.Response)
     } = req;
 
     if(!userId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'UserId can not be empty'},
         });
@@ -116,9 +116,9 @@ export const updateOneUser = async (req: express.Request ,res: express.Response)
         }
         await userSchema.validateAsync(body)
         const updatedUser = await updateUser(userId,body);
-        res.send({status: 'OK', data: updatedUser});        
+        return res.json({status: 'OK', data: updatedUser});        
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 };
@@ -129,7 +129,7 @@ export const deleteOneUser = async (req: express.Request ,res: express.Response)
     }= req;
 
     if(!userId){
-        res.status(400).send({
+        res.status(400).json({
             status: 'FAILED',
             data: {error: 'UserId can not be empty'},
         });
@@ -137,9 +137,9 @@ export const deleteOneUser = async (req: express.Request ,res: express.Response)
 
     try{
         await deleteUser(userId);
-        res.send({status: 'OK'});        
+        return res.json({status: 'OK'});        
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 };

@@ -1,12 +1,3 @@
-/* eslint-disable node/no-process-env */
-/* eslint-disable @typescript-eslint/require-await */
-/* eslint-disable @typescript-eslint/no-unsafe-argument */
-/* eslint-disable @typescript-eslint/no-unsafe-assignment */
-/* eslint-disable max-len */
-/* eslint-disable @typescript-eslint/no-unsafe-return */
-/* eslint-disable indent */
-/* eslint-disable @typescript-eslint/no-unsafe-call */
-/* eslint-disable @typescript-eslint/no-unsafe-member-access */
 import passport from 'passport';
 import {Strategy as localStrategy} from 'passport-local';
 import { Strategy as JWTstrategy} from 'passport-jwt';

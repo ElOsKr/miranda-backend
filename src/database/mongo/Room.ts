@@ -1,12 +1,9 @@
 import { RoomType } from '@src/@types/roomType';
-import { connect, disconnect } from '../mongo-models/connectionMongo';
-import { roomModel } from '../mongo-models/roomsSchema';
+import { roomModel } from '../mongo-models/roomsModel';
 
 export const getAllRooms = async () => {
     try{
-        await connect();
         const rooms = await roomModel.find();
-        await disconnect()
         return rooms;
     }catch(error){
         throw { status: 500, message: error};
@@ -15,9 +12,7 @@ export const getAllRooms = async () => {
 
 export const getOneRoom = async (roomId: string) => {
     try{
-        await connect();
-        const room = await roomModel.find({id: roomId});
-        await disconnect();
+        const room = await roomModel.find({id: roomId});;
         return room;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
@@ -26,7 +21,6 @@ export const getOneRoom = async (roomId: string) => {
 
 export const createNewRoom = async (newRoom: RoomType): Promise<RoomType> => {
     try{
-        await connect();
         await roomModel.create(newRoom);
         return newRoom;
     }catch (error){
@@ -39,9 +33,7 @@ export const createNewRoom = async (newRoom: RoomType): Promise<RoomType> => {
 
 export const updateOneRoom = async(roomId: string, changes: Omit<Partial<RoomType>, "id">) => {
     try{
-        await connect();
-        await roomModel.findOneAndUpdate({id: roomId}, changes);
-        await disconnect();
+        await roomModel.findOneAndUpdate({id: roomId}, changes);;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
@@ -49,12 +41,8 @@ export const updateOneRoom = async(roomId: string, changes: Omit<Partial<RoomTyp
 
 export const deleteOneRoom = async(roomId: string): Promise<void> => {
     try{
-        await connect();
         await roomModel.findOneAndDelete({id: roomId});
-        await disconnect
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
-
-
 };

@@ -13,9 +13,9 @@ import { bookingSchema } from '../util/validate/bookingsValidate';
 export const getAllBookings = async (req: express.Request ,res: express.Response) => {
     try{
         const allBookings = await getBookings();
-        res.send({status: 'OK', data: allBookings});
+        return res.json({status: 'OK', data: allBookings});
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
@@ -24,7 +24,7 @@ export const getOneBooking = async (req: express.Request ,res: express.Response)
         params: {bookingId},
     } = req;
     if(!bookingId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'BookingId can not be empty'},
         });
@@ -32,16 +32,13 @@ export const getOneBooking = async (req: express.Request ,res: express.Response)
 
     try{
         const booking = await getBooking(bookingId);
-        res.send({status: 'OK', data: booking});       
+        return res.json({status: 'OK', data: booking});       
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
-
-
 };
 
 export const createOneBooking = async (req: express.Request ,res: express.Response) => {
-    
     const { body } = req;
 
     if(
@@ -56,18 +53,17 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
         !body.description||
         (!body.status && typeof body.status !== "boolean")
     ){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'Failed',
             data: {
                 error: 'Cannot create object',
             },
         });
-        return;
     }
     
     for ( const key in body ){
         if(!body[key] && body.status !==false){
-            res.status(400).send({
+            return res.status(400).json({
                 status: 'Failed',
                 data: {
                     error: 'missing params',
@@ -94,9 +90,9 @@ export const createOneBooking = async (req: express.Request ,res: express.Respon
     try{
         await bookingSchema.validateAsync(newBooking);
         const createdBooking = await createBooking(newBooking);
-        res.send({status: 'OK', data: createdBooking});
+        return res.json({status: 'OK', data: createdBooking});
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
@@ -107,7 +103,7 @@ export const updateOneBooking = async (req: express.Request ,res: express.Respon
     } = req;
 
     if(!bookingId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'BookingId can not be empty'},
         });
@@ -119,11 +115,10 @@ export const updateOneBooking = async (req: express.Request ,res: express.Respon
         }
         await bookingSchema.validateAsync(body)
         const updatedBooking = await updateBooking(bookingId,body);
-        res.send({status: 'OK', data: updatedBooking});        
+        return res.json({status: 'OK', data: updatedBooking});        
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
-
 };
 
 export const deleteOneBooking = async (req: express.Request ,res: express.Response) => {
@@ -132,7 +127,7 @@ export const deleteOneBooking = async (req: express.Request ,res: express.Respon
     }= req;
 
     if(!bookingId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'BookingId can not be empty'},
         });
@@ -140,9 +135,8 @@ export const deleteOneBooking = async (req: express.Request ,res: express.Respon
 
     try{
         await deleteBooking(bookingId);
-        res.send({status: 'OK'});        
+        return res.json({status: 'OK'});        
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
-
 };

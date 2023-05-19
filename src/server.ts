@@ -9,8 +9,13 @@ import'./auth/auth';
 import userRouter from './routes/users';
 import contactRouter from './routes/contacts';
 import roomRouter from './routes/rooms';
+import { connect } from './database/mongo-models/connectionMongo';
 
 const app = express();
+
+const connection = async () => await connect();
+
+connection();
 
 app.use(cors());
 

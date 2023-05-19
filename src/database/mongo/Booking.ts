@@ -1,16 +1,9 @@
-import { BookingsType } from '@src/@types/bookingsType';
-import { connection } from './connectionDB';
+import { BookingsType } from '../../@types/bookingsType';
+import { bookingModel } from '../mongo-models/bookingModel';
 
 export const getAllBookings = async () => {
     try{
-        const bookings = (await connection).execute(
-            `SELECT b.*, r.type 
-             FROM bookings b
-             JOIN
-             rooms r
-             ON b.room_id = r.id
-            `,
-        );
+        const bookings = await bookingModel.find();
         return bookings;
     }catch(error){
         throw { status: 500, message: error};
@@ -19,10 +12,7 @@ export const getAllBookings = async () => {
 
 export const getOneBooking = async (bookingId: string) => {
     try{
-        const booking = (await connection).execute(
-            'SELECT * FROM bookings where id = ?',
-            [bookingId],
-        );
+        const booking = await bookingModel.find({id: bookingId})
         return booking;
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
@@ -31,10 +21,7 @@ export const getOneBooking = async (bookingId: string) => {
 
 export const createNewBooking = async (newBooking: BookingsType): Promise<BookingsType> => {
     try{
-        (await connection).query(
-            'INSERT INTO bookings SET ?',
-            [newBooking],
-        );
+        await bookingModel.create(newBooking);
         return newBooking;
     }catch (error){
         throw {
@@ -46,10 +33,7 @@ export const createNewBooking = async (newBooking: BookingsType): Promise<Bookin
 
 export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<BookingsType>, "id">): Promise<void> => {
     try{
-        (await connection).query(
-            'UPDATE bookings set ? where id=?',
-            [changes,bookingId],
-        );
+        await bookingModel.findOneAndUpdate({id: bookingId}, changes);
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
@@ -57,13 +41,8 @@ export const updateOneBooking = async (bookingId: string, changes: Omit<Partial<
 
 export const deleteOneBooking = async (bookingId: string): Promise<void> => {
     try{
-        (await connection).execute(
-            'DELETE FROM bookings where id=?',
-            [bookingId],
-        );       
+        await bookingModel.findOneAndDelete({id: bookingId})
     }catch(error){
         throw { status: error?.status||500 , message: error?.message || error};
     }
-
-
 };

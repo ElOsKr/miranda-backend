@@ -7,10 +7,10 @@ import { ContactsType } from './@types/contactType';
 import { BookingsType } from './@types/bookingsType';
 import bcrypt from 'bcrypt';
 import { connect, disconnect } from './database/mongo-models/connectionMongo';
-import { contactModel } from './database/mongo-models/contactSchema';
-import { roomModel } from './database/mongo-models/roomsSchema';
-import { userModel } from './database/mongo-models/usersSchema';
-import { bookingModel } from './database/mongo-models/bookingSchema';
+import { contactModel } from './database/mongo-models/contactModel';
+import { roomModel } from './database/mongo-models/roomsModel';
+import { userModel } from './database/mongo-models/usersModel';
+import { bookingModel } from './database/mongo-models/bookingModel';
 
 let rooms_ids: string[] = [];
 

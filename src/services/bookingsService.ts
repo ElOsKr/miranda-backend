@@ -1,5 +1,5 @@
 import { BookingsType } from '../@types/bookingsType';
-import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '..//database/mongo/Bookings';
+import { createNewBooking, deleteOneBooking, getAllBookings, getOneBooking, updateOneBooking } from '../database/mongo/Booking';
 
 export const getBookings = async () => {
     try{

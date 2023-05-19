@@ -13,9 +13,9 @@ import { uuid } from 'uuidv4';
 export const getAllRooms = async(req: express.Request ,res: express.Response) => {
     try{
         const allRooms = await getRooms();
-        res.send({status: 'OK', data: allRooms});
+        return res.json({status: 'OK', data: allRooms});
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
@@ -24,7 +24,7 @@ export const getOneRoom = async(req: express.Request ,res: express.Response) => 
         params: {roomId},
     } = req;
     if(!roomId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'RoomId can not be empty'},
         });
@@ -32,9 +32,9 @@ export const getOneRoom = async(req: express.Request ,res: express.Response) => 
 
     try{
         const Room = await getRoom(roomId);
-        res.send({status: 'OK', data: Room});       
+        return res.json({status: 'OK', data: Room});       
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 
@@ -51,7 +51,7 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
         !body.type||
         (!body.status && typeof body.status !== "boolean")
     ){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'Failed',
             data: {
                 error: 'Cannot create object',
@@ -62,7 +62,7 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     
     for ( const key in body ){
         if(!body[key] && body[key] !==false){
-            res.status(400).send({
+            return res.status(400).json({
                 status: 'Failed',
                 data: {
                     error: 'missing params',
@@ -86,9 +86,9 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     try{
         await roomSchema.validateAsync(newRoom)
         const createdRoom = await createRoom(newRoom);
-        res.send({status: 'OK', data: createdRoom});
+        return res.json({status: 'OK', data: createdRoom});
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 };
 
@@ -99,7 +99,7 @@ export const updateOneRoom = async (req: express.Request ,res: express.Response)
     } = req;
 
     if(!roomId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'RoomId can not be empty'},
         });
@@ -111,9 +111,9 @@ export const updateOneRoom = async (req: express.Request ,res: express.Response)
         }
         await roomSchema.validateAsync(body)
         const updatedRoom = await updateRoom(roomId,body);
-        res.send({status: 'OK', data: updatedRoom});        
+        return res.json({status: 'OK', data: updatedRoom});        
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 };
@@ -124,7 +124,7 @@ export const deleteOneRoom = async (req: express.Request ,res: express.Response)
     }= req;
 
     if(!roomId){
-        res.status(400).send({
+        return res.status(400).json({
             status: 'FAILED',
             data: {error: 'RoomId can not be empty'},
         });
@@ -132,9 +132,9 @@ export const deleteOneRoom = async (req: express.Request ,res: express.Response)
 
     try{
         await deleteRoom(roomId);
-        res.send({status: 'OK'});        
+        return res.json({status: 'OK'});        
     }catch(error){
-        res.status(error?.status || 500).send({ status: 'FAILED', data: { error: error?.message || error}});
+        return res.status(error?.status || 500).json({ status: 'FAILED', data: { error: error?.message || error}});
     }
 
 };
