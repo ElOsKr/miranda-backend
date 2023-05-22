@@ -4,6 +4,7 @@ export interface UserType {
     password: string
     photo: string,
     email: string,
+    joined: Date,
     description: string,
     contact: number,
     status: boolean 

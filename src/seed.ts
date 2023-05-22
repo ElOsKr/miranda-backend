@@ -1,7 +1,6 @@
 import { faker } from '@faker-js/faker';
 import { RoomType } from './@types/roomType';
 import {uuid}  from 'uuidv4';
-import { connection } from './database/mysql/connectionDB';
 import { UserType } from './@types/userType';
 import { ContactsType } from './@types/contactType';
 import { BookingsType } from './@types/bookingsType';
@@ -14,8 +13,10 @@ import { bookingModel } from './database/mongo-models/bookingModel';
 
 let rooms_ids: string[] = [];
 
+const connection = async () => await connect();
+
 async function main(): Promise<void>{
-    await connect();
+    connection()
     await createRooms(10);
     await createUsers(10);
     await createContacts(10);
@@ -50,6 +51,7 @@ const createUsers = async (numberUsers: number): Promise<void> => {
             name: faker.name.fullName(),
             password: bcrypt.hashSync(faker.internet.password(),salt),
             photo: faker.image.avatar(),
+            joined: faker.date.between('2023-01-01T00:00:00.000Z', '2023-01-12T00:00:00.000Z'),
             email: faker.internet.exampleEmail(),
             description: faker.company.bsBuzz(),
             contact: Number(faker.phone.number('6########')),

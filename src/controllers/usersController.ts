@@ -83,6 +83,7 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
         password: password,
         photo: body.user_photo,
         email: body.user_email,
+        joined: body.user_joined,
         description: body.user_description,
         contact: body.user_contact,
         status: body.user_status,

@@ -2,6 +2,7 @@ import passport from 'passport';
 import {Strategy as localStrategy} from 'passport-local';
 import { Strategy as JWTstrategy} from 'passport-jwt';
 import { ExtractJwt } from 'passport-jwt';
+import 'dotenv/config';
 
 passport.use(
     'login',
@@ -19,7 +20,7 @@ passport.use(
                   return done(null, false, { message: 'Wrong Password' });
                 }
 
-                return done(null, {email: 'admin@admin.com', password: 'admin'}, { message: 'Logged in Successfully' });               
+                return done(null, {email: process.env.LOGIN_USER , password: process.env.LOGIN_PASSWORD}, { message: 'Logged in Successfully' });               
             }catch ( error ){
                 done(error);
             }
@@ -30,7 +31,7 @@ passport.use(
 passport.use(
     new JWTstrategy(
       {
-        secretOrKey: 'SECRET_KEY',
+        secretOrKey: process.env.SECRET_KEY,
         jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
       },
       async (token, done) => {

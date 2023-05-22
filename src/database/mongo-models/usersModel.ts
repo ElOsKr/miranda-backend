@@ -8,6 +8,7 @@ export const userSchema = new Schema<UserType>({
     password: String,
     photo: String,
     email: String,
+    joined: Date,
     contact: Number,
     description: String,
     status: Boolean

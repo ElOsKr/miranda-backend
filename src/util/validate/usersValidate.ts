@@ -7,6 +7,7 @@ export const userSchema = joi.object<UserType>({
     password: joi.string(),
     photo: joi.string().uri(),
     email: joi.string().email(),
+    joined: joi.date(),
     description: joi.string(),
     contact: joi.number(),
     status: joi.boolean()
