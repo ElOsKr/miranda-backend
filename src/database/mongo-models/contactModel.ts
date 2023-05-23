@@ -4,11 +4,11 @@ import { ContactsType } from '@src/@types/contactType'
 
 const contactSchema = new Schema<ContactsType>({
     id: {type: String, unique: true},
-    customer: [{
+    customer: {
         name: String,
         email: String,
         phone: Number
-    }],
+    },
     subject: String,
     comment: String,
     status: Boolean
