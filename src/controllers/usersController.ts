@@ -79,14 +79,14 @@ export const createOneUser = async (req: express.Request ,res: express.Response)
 
     const newUser: UserType = {
         id: uuid(),
-        name: body.user_name,
+        name: body.name,
         password: password,
-        photo: body.user_photo,
-        email: body.user_email,
-        joined: body.user_joined,
-        description: body.user_description,
-        contact: body.user_contact,
-        status: body.user_status,
+        photo: body.photo,
+        email: body.email,
+        joined: body.joined,
+        description: body.description,
+        contact: body.contact,
+        status: body.status,
     };
 
     try{
