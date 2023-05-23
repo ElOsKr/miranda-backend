@@ -61,7 +61,7 @@ export const createOneRoom = async(req: express.Request ,res: express.Response) 
     }
     
     for ( const key in body ){
-        if(!body[key] && body[key] !==false){
+        if(!body[key] && body[key] !==false && body[key] !==0){
             return res.status(400).json({
                 status: 'Failed',
                 data: {
