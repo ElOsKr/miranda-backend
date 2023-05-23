@@ -48,6 +48,7 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
         !body.customer||
         !body.subject||
         !body.comment||
+        !body.sended ||
         (!body.status && typeof body.status !== "boolean")
     ){
         res.status(400).json({
@@ -74,6 +75,7 @@ export const createOneContact = async (req: express.Request ,res: express.Respon
         customer: body.customer,
         subject: body.subject,
         comment: body.comment,
+        sended: body.sended,
         status: body.status,
     };
 

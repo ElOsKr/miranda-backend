@@ -6,5 +6,6 @@ export const contactSchema = joi.object<ContactsType>({
     customer: joi.object(),
     subject: joi.string(),
     comment: joi.string(),
+    sended: joi.date(),
     status: joi.boolean()
 })

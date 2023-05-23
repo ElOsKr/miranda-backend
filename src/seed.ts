@@ -73,6 +73,7 @@ const createContacts = async (numberContacts: number): Promise<void> => {
                     phone: Number(faker.phone.number('6########'))
                 }
             ,
+            sended: faker.date.between('2023-01-01T00:00:00.000Z', '2023-01-12T00:00:00.000Z'),
             subject: faker.company.bs(),
             comment: faker.company.catchPhraseDescriptor(),
             status: faker.datatype.boolean()

@@ -5,6 +5,7 @@ export interface ContactsType {
         email: string,
         phone: number
     },
+    sended: Date,
     subject: string,
     comment: string,
     status?: boolean
