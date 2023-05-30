@@ -22,6 +22,23 @@ async function main(): Promise<void>{
     (await connection).end()
 }
 
+const roomAmenities = [
+    'security',
+    'team',
+    'support',
+    'key',
+    'towels',
+    'bed',
+    'shower',
+    'kitchen',
+    'wifi',
+    'shop',
+    'grocery',
+    'cleaning',
+    'breakfast',
+    'air',
+]
+
 const createRooms = (numberRooms: number) => {
     for(let i = 0; i<numberRooms; i++){
         const room: RoomType = {
@@ -29,7 +46,7 @@ const createRooms = (numberRooms: number) => {
             room_number: faker.datatype.number({min: 0, max: 500}),
             room_photo: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=',
             room_type: faker.helpers.arrayElement(['double bed','single','duplex']),
-            room_amenities: JSON.stringify([faker.company.catchPhraseDescriptor(),faker.company.catchPhraseDescriptor()]),
+            room_amenities: JSON.stringify(faker.helpers.arrayElements(roomAmenities, 3)),
             room_price: faker.datatype.number({min: 100, max: 500}),
             room_offer: faker.datatype.number({min: 0, max: 99}),
             room_status: faker.datatype.boolean(),
