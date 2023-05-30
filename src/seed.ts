@@ -51,8 +51,8 @@ const createRooms = (numberRooms: number) => {
         const room: RoomType = {
             room_id: uuid(),
             room_number: faker.datatype.number({min: 0, max: 500}),
-            room_photo: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=',
-            room_type: faker.helpers.arrayElement(roomPhotos),
+            room_photo: faker.helpers.arrayElement(roomPhotos),
+            room_type: faker.helpers.arrayElement(['double bed','single','duplex']),
             room_amenities: JSON.stringify(faker.helpers.arrayElements(roomAmenities, 3)),
             room_price: faker.datatype.number({min: 100, max: 500}),
             room_offer: faker.datatype.number({min: 0, max: 99}),
