@@ -39,13 +39,20 @@ const roomAmenities = [
     'air',
 ]
 
+const roomPhotos = [
+    'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=',
+    'https://e00-elmundo.uecdn.es/assets/multimedia/imagenes/2022/06/15/16552986712590.jpg',
+    'https://www.hotelbecquer.com/wp-content/uploads/sites/2100/nggallery/01-home//HOME_03_HABITACIONES_SLIDER_1.jpg',
+    'https://cdn.loewshotels.com/loewshotels.com-2466770763/cms/cache/v2/5f5a6e0d12749.jpg/1920x1080/fit/80/86e685af18659ee9ecca35c465603812.jpg'
+]
+
 const createRooms = (numberRooms: number) => {
     for(let i = 0; i<numberRooms; i++){
         const room: RoomType = {
             room_id: uuid(),
             room_number: faker.datatype.number({min: 0, max: 500}),
             room_photo: 'https://q-xx.bstatic.com/xdata/images/hotel/max1024x768/376374041.jpg?k=33f539035e74461bd374023afc086f01c5a7849d5a3cfa6df49baa41177a2c52&o=',
-            room_type: faker.helpers.arrayElement(['double bed','single','duplex']),
+            room_type: faker.helpers.arrayElement(roomPhotos),
             room_amenities: JSON.stringify(faker.helpers.arrayElements(roomAmenities, 3)),
             room_price: faker.datatype.number({min: 100, max: 500}),
             room_offer: faker.datatype.number({min: 0, max: 99}),
