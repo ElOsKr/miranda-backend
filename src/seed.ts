@@ -53,7 +53,7 @@ const createRooms = (numberRooms: number) => {
             room_number: faker.datatype.number({min: 0, max: 500}),
             room_photo: faker.helpers.arrayElement(roomPhotos),
             room_type: faker.helpers.arrayElement(['double bed','single','duplex']),
-            room_amenities: JSON.stringify(faker.helpers.arrayElements(roomAmenities, 3)),
+            room_amenities: JSON.stringify(faker.helpers.arrayElements(roomAmenities, Math.random() * (14-1) + 1)),
             room_price: faker.datatype.number({min: 100, max: 500}),
             room_offer: faker.datatype.number({min: 0, max: 99}),
             room_status: faker.datatype.boolean(),
