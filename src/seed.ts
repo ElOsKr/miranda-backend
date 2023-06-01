@@ -84,13 +84,9 @@ const createContacts = (numberContacts: number) => {
     for(let i = 0; i<numberContacts; i++){
         const contact: ContactsType = {
             contact_id: uuid(),
-            contact_customer: JSON.stringify(
-                {
-                    name: faker.name.fullName(),
-                    email: faker.internet.exampleEmail(),
-                    phone: Number(faker.phone.number('6########'))
-                }
-            ),
+            contact_name: faker.name.fullName(),
+            contact_email: faker.internet.exampleEmail(),
+            contact_phone: Number(faker.phone.number('6########')),
             contact_subject: faker.company.bs(),
             contact_comment: faker.company.catchPhraseDescriptor(),
             contact_status: faker.datatype.boolean()

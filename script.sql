@@ -30,7 +30,9 @@ ENGINE = InnoDB;
 
 CREATE TABLE contacts (
     contact_id varchar(120) NOT NULL,
-    contact_customer JSON NOT NULL,
+    contact_name varchar(100) NOT NULL,
+    contact_email varchar(100) NOT NULL,
+    contact_phone varchar(100) NOT NULL,
     contact_subject varchar(2000) NOT NULL,
     contact_comment varchar(100) NOT NULL,
     contact_status boolean,
