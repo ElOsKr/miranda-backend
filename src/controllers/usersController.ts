@@ -8,7 +8,7 @@ import {
 } from '../services/usersService';
 import express from 'express';
 import { uuid } from 'uuidv4';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { userSchema } from '../util/validate/usersValidate';
 
 export const getAllUsers = async (req: express.Request ,res: express.Response) => {

@@ -1,5 +1,8 @@
 import app from './server';
+import awsServerlessExpress from 'aws-serverless-express';
 
-const PORT = 3001
+const server = awsServerlessExpress.createServer(app);
 
-app.listen(PORT, () => console.log(`Listen in ${PORT}`))
+exports.handler = (event: any, context: any) => {
+    awsServerlessExpress.proxy(server,event,context)
+};

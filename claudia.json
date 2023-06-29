@@ -1,0 +1,10 @@
+{
+  "lambda": {
+    "role": "mirandaApi-executor",
+    "name": "mirandaApi",
+    "region": "eu-west-3"
+  },
+  "api": {
+    "id": "0jo4a44dsh"
+  }
+}

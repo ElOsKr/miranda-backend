@@ -4,7 +4,7 @@ import {uuid}  from 'uuidv4';
 import { UserType } from './@types/userType';
 import { ContactsType } from './@types/contactType';
 import { BookingsType } from './@types/bookingsType';
-import bcrypt from 'bcrypt';
+import bcrypt from 'bcryptjs';
 import { connect, disconnect } from './database/mongo-models/connectionMongo';
 import { contactModel } from './database/mongo-models/contactModel';
 import { roomModel } from './database/mongo-models/roomsModel';
